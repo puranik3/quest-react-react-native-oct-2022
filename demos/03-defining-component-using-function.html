@@ -1,0 +1,40 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Function component</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
+
+        <script type="text/babel">
+            // 1. A component definition function MUST be capitalized
+            // const IconButton = ( props ) => {
+            const IconButton = ( { text, color } ) => {
+                // console.log( props );
+                
+                return (
+                    <button style={{ backgroundColor: color, color: 'white' }}>{text}</button>
+                );
+            };
+            
+            const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
+            
+            // <></> is a React fragment (a wrapper for multiple UI elements)
+            // root.render( <IconButton></IconButton> );
+            root.render(
+                <>
+                    <IconButton text="Save" color="green" />
+                    <IconButton text="Submit" color="gray" />
+                </>
+            );
+        </script>
+    </body>
+</html>

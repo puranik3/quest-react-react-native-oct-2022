@@ -1,0 +1,48 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hello React</title>
+    </head>
+    <body>
+        <!--
+            <div id="message" title="Introduction to React">
+                Hello <strong>React</strong>
+            </div>
+        -->
+        <div id="root"></div>
+
+        <!-- architect : React core helps us define the UI for the web pages in our application -->
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+
+        <!-- builder : Takes the UI definition as an input, and does the DOM manipulations. We do not need this for mobile native apps -->
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+        <script>
+            // Step 1: We define the UI (React element el will be created)
+            const el = React.createElement(
+                'div', // type of element
+                { // props (HTML element attributes)
+                    id: 'message',
+                    title: 'Introduction to React'
+                },
+                'Hello ', // 3rd argument onwards are the children elements
+                React.createElement(
+                    'strong',
+                    {}, // or null
+                    'React'
+                )
+            );
+
+            // the element is simply a JS object capturing UI information
+            console.log( el );
+
+            // Step 2: Render the UI
+            const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
+            root.render( el );
+        </script>
+    </body>
+</html>
