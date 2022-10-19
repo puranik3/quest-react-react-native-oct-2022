@@ -1,0 +1,53 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Function component</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <style>
+            .btn {
+                padding: 0.5em;
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
+
+        <script type="text/babel">
+            // 1. A component definition function MUST be capitalized
+            // const IconButton = ( props ) => {
+            const IconButton = ( { text, color, icon } ) => {
+                // console.log( props );
+                
+                return (
+                    <button
+                        style={{ backgroundColor: color, color: 'white' }}
+                        className="btn"
+                    >
+                        <i class={"fa-solid fa-" + icon} style={{ paddingRight: '8px' }}></i>
+                        {text}
+                    </button>
+                );
+            };
+            
+            const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
+            
+            // <></> is a React fragment (a wrapper for multiple UI elements)
+            // root.render( <IconButton></IconButton> );
+            root.render(
+                <>
+                    <IconButton text="Save" color="green" icon="floppy-disk" />
+                    <IconButton text="Submit" color="gray" icon="envelope" />
+                </>
+            );
+        </script>
+    </body>
+</html>
