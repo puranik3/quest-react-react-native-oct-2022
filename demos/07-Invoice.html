@@ -17,21 +17,38 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
 
         <script type="text/babel">
+            /**
+             * const arr = [ 10, 20, 30, 40, 50, 60 ];
+             * arr.map( item => item / 2 )
+             * [5, 10, 15, 20, 25, 30]
+             */
             const Invoice = ( { items, customer, discountCoupon } ) => {
                 // we generate an array of table row elements
-                const trs = [];
+                // const trs = [];
 
-                for( let i = 0; i < items.length; i++ ) {
-                    trs.push(
-                        <tr>
-                            <td>{i + 1}</td>
-                            <td>{items[i].name}</td>
-                            <td>{items[i].quantity}</td>
-                            <td>{items[i].price}</td>
-                            <td>{items[i].quantity * items[i].price}</td>
-                        </tr>
-                    )
-                }
+                // for( let i = 0; i < items.length; i++ ) {
+                //     trs.push(
+                //         <tr>
+                //             <td>{i + 1}</td>
+                //             <td>{items[i].name}</td>
+                //             <td>{items[i].quantity}</td>
+                //             <td>{items[i].price}</td>
+                //             <td>{items[i].quantity * items[i].price}</td>
+                //         </tr>
+                //     )
+                // }
+
+                // const trs = items.map(
+                //     ( item, i ) => (
+                //         <tr>
+                //             <td>{i + 1}</td>
+                //             <td>{item.name}</td>
+                //             <td>{item.quantity}</td>
+                //             <td>{item.price}</td>
+                //             <td>{item.quantity * item.price}</td>
+                //         </tr>
+                //     )
+                // );
 
                 /* when we insert an array of React elements, every React element in that array is displayed */
                 return (
@@ -52,7 +69,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {trs}
+                                {
+                                    items.map(
+                                        ( item, i ) => (
+                                            <tr>
+                                                <td>{i + 1}</td>
+                                                <td>{item.name}</td>
+                                                <td>{item.quantity}</td>
+                                                <td>{item.price}</td>
+                                                <td>{item.quantity * item.price}</td>
+                                            </tr>
+                                        )
+                                    )
+                                }
                             </tbody>
                         </table>
                     </div>
