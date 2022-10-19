@@ -1,0 +1,60 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
+        <title>Composing components</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
+
+        <script type="text/babel">
+            const WeatherReport = function( { city, minTemp, maxTemp, humidity, rainfall } ) {
+                return (
+                    <div className="card m-4 p-4">
+                        <h2 className="mb-4">Weather today at {city}</h2>
+                        <div>
+                            <span className="me-5">
+                                <i class="fa-solid fa-temperature-low me-2"></i>
+                                Minimum temperature - {minTemp} ℃
+                            </span>
+                            <span>
+                                <i class="fa-solid fa-temperature-high me-2"></i>
+                                Maximum temperature - {maxTemp} ℃
+                            </span>
+                        </div>
+                        <div className="mt-3">
+                            <span className="me-5">
+                                <i class="fa-solid fa-droplet me-2"></i>
+                                Humidity - {minTemp}%
+                            </span>
+                            <span>
+                                <i class="fa-solid fa-cloud-rain me-2"></i>
+                                Rainfall - {rainfall} mm
+                            </span>
+                        </div>
+                    </div>
+                );
+            };
+            
+            const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
+            root.render(
+                <WeatherReport
+                    city="Trivandrum"
+                    minTemp={20}
+                    maxTemp={32}
+                    humidity={80}
+                    rainfall={25}
+                />
+            );
+        </script>
+    </body>
+</html>
