@@ -71,6 +71,7 @@
                 rainfall: 25
             };
             
+            /* we are using props spread syntax <Component {...props} /> */
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
             root.render(
                 <WeatherReport {...weatherProps} />

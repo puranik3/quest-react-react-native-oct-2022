@@ -4,3 +4,4 @@
 ## Exercises
 - 01 Lab guide
     - Q. 1, 2, 3
+- Flex box properties - http://flexboxfroggy.com/
