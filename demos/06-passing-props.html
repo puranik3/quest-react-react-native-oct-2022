@@ -47,7 +47,10 @@
                 );
             }
 
-            const WeatherReport = function( { city, minTemp, maxTemp, humidity, rainfall } ) {
+            // while destructuring we can gather the "rest" of the properties in the object into another object
+            const WeatherReport = function( { city, minTemp, maxTemp, ...rainfallProps } ) {
+                console.log( rainfallProps ); // { humidity: 80, rainfall: 20 }
+
                 return (
                     <div className="card m-4 p-4">
                         <h2 className="mb-4">Weather today at {city}</h2>
@@ -55,23 +58,22 @@
                             minTemp={minTemp}
                             maxTemp={maxTemp}
                         />
-                        <RainfallReport
-                            humidity={humidity}
-                            rainfall={rainfall}
-                        />
+                        <RainfallReport {...rainfallProps} />
                     </div>
                 );
+            };
+
+            const weatherProps = {
+                city: 'Trivandrum',
+                minTemp: 20,
+                maxTemp: 32,
+                humidity: 80,
+                rainfall: 25
             };
             
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
             root.render(
-                <WeatherReport
-                    city="Trivandrum"
-                    minTemp={20}
-                    maxTemp={32}
-                    humidity={80}
-                    rainfall={25}
-                />
+                <WeatherReport {...weatherProps} />
             );
         </script>
     </body>
