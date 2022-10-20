@@ -17,8 +17,28 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
 
         <script type="text/babel">
-            // EXERCISE: PLease convert all 3 components using class-based syntax
-            class TemperatureReport extends React.Component {
+            // If we intend to use Temperature and Rainfall only within WeatherReport component, we can go in for the namespacing pattern to make this intention clear
+            class WeatherReport extends React.Component {
+                render() {
+                    const { city, minTemp, maxTemp, humidity, rainfall } = this.props;
+
+                    return (
+                        <div className="card m-4 p-4">
+                            <h2 className="mb-4">Weather today at {city}</h2>
+                            <WeatherReport.Temperature
+                                minTemp={minTemp}
+                                maxTemp={maxTemp}
+                            />
+                            <WeatherReport.Rainfall
+                                humidity={humidity}
+                                rainfall={rainfall}
+                            />
+                        </div>
+                    );
+                }
+            }
+
+            WeatherReport.Temperature = class extends React.Component {
                 render() {
                     const { minTemp, maxTemp } = this.props;
 
@@ -37,7 +57,7 @@
                 }
             }
 
-            class RainfallReport extends React.Component {
+            WeatherReport.Rainfall = class extends React.Component {
                 render() {
                     const { humidity, rainfall } = this.props;
 
@@ -51,26 +71,6 @@
                                 <i className="fa-solid fa-cloud-rain me-2"></i>
                                 Rainfall - {rainfall} mm
                             </span>
-                        </div>
-                    );
-                }
-            }
-
-            class WeatherReport extends React.Component {
-                render() {
-                    const { city, minTemp, maxTemp, humidity, rainfall } = this.props;
-
-                    return (
-                        <div className="card m-4 p-4">
-                            <h2 className="mb-4">Weather today at {city}</h2>
-                            <TemperatureReport
-                                minTemp={minTemp}
-                                maxTemp={maxTemp}
-                            />
-                            <RainfallReport
-                                humidity={humidity}
-                                rainfall={rainfall}
-                            />
                         </div>
                     );
                 }

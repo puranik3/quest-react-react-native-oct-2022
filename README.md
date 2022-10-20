@@ -9,3 +9,6 @@
     - Flex box properties - http://flexboxfroggy.com/
     - 01 Lab guide
         - Q. 5, 6, 7, 9
+- Oct 20
+    - 01 Lab guide
+        - Q. 6
