@@ -28,7 +28,7 @@
              * arr.map( item => item / 2 )
              * [5, 10, 15, 20, 25, 30]
              */
-            const Invoice = ( { items, customer, discountCoupon } ) => {
+            const Invoice = ( { items, customer, discountCoupon, prime } ) => {
                 // we generate an array of table row elements
                 // const trs = [];
 
@@ -55,6 +55,11 @@
                 //         </tr>
                 //     )
                 // );
+
+                const total = items.reduce(
+                    ( acc, item ) => acc + item.quantity * item.price,
+                    0
+                );
 
                 /* when we insert an array of React elements, every React element in that array is displayed */
                 return (
@@ -94,20 +99,20 @@
                             <tfoot>
                                 <tr>
                                     <td colSpan={4}></td>
-                                    <td className="font-monospace text-end">
-                                        {
-                                            items.reduce(
-                                                ( acc, item ) => acc + item.quantity * item.price,
-                                                0
-                                            )
-                                        }
-                                    </td>
+                                    <td className="font-monospace text-end">{total}</td>
                                 </tr>
                             </tfoot>
                         </table>
                         {
                             discountCoupon && (
                                 <div className="alert alert-info text-center">Use <strong>{discountCoupon}</strong> to get a discount on your next purchase</div>
+                            )
+                        }
+                        {
+                            prime ? (
+                                <div className="alert alert-primary text-center">Hurray! {Math.round(total/100)} credited toyour account</div>
+                            ) : (
+                                <div className="alert alert-primary text-center">Register as  a PRIME member to get loyalty points credited to your account on every purchase.</div>
                             )
                         }
                     </div>
@@ -125,7 +130,8 @@
                     name: 'John Doe',
                     phone: '9123456780'
                 },
-                discountCoupon: 'NEW10'
+                discountCoupon: 'NEW10',
+                prime: false
             };
             
             const propsJane = {
@@ -138,7 +144,8 @@
                 customer: {
                     name: 'Jane Doe',
                     phone: '9123456781'
-                }
+                },
+                prime: true
             };
 
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
