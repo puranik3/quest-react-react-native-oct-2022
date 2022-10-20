@@ -8,6 +8,12 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
         <title>Invoice - JSX features</title>
+        <style>
+            .price {
+                text-align: right;
+                font-family: monospace;
+            }
+        </style>
     </head>
     <body>
         <div id="root"></div>
@@ -53,6 +59,8 @@
                 /* when we insert an array of React elements, every React element in that array is displayed */
                 return (
                     <div className="card m-4 p-4 w-50">
+                        <h1 className="text-center">Invoice</h1>
+
                         <div className="d-flex justify-content-between">
                             <span>Name: {customer.name}</span>
                             <span>Phone: {customer.phone}</span>
@@ -63,9 +71,9 @@
                                 <tr>
                                     <th>S.No</th>
                                     <th>Name</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Total</th>
+                                    <th className="text-end">Quantity</th>
+                                    <th className="text-end">Price</th>
+                                    <th className="text-end">Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,20 +83,38 @@
                                             <tr key={item.name}>
                                                 <td>{i + 1}</td>
                                                 <td>{item.name}</td>
-                                                <td>{item.quantity}</td>
-                                                <td>{item.price}</td>
-                                                <td>{item.quantity * item.price}</td>
+                                                <td className="price">{item.quantity}</td>
+                                                <td className="font-monospace text-end">{item.price}</td>
+                                                <td className="font-monospace text-end">{item.quantity * item.price}</td>
                                             </tr>
                                         )
                                     )
                                 }
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colSpan={4}></td>
+                                    <td className="font-monospace text-end">
+                                        {
+                                            items.reduce(
+                                                ( acc, item ) => acc + item.quantity * item.price,
+                                                0
+                                            )
+                                        }
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
+                        {
+                            discountCoupon && (
+                                <div className="alert alert-info text-center">Use <strong>{discountCoupon}</strong> to get a discount on your next purchase</div>
+                            )
+                        }
                     </div>
                 );
             };
             
-            const props = {
+            const propsJohn = {
                 items: [
                     { name: 'Lays chips', quantity: 2, price: 30 },
                     { name: 'Lion Dates', quantity: 1, price: 120 },
@@ -101,10 +127,26 @@
                 },
                 discountCoupon: 'NEW10'
             };
+            
+            const propsJane = {
+                items: [
+                    { name: 'Close up toothpaste', quantity: 2, price: 120 },
+                    { name: 'Lion Dates', quantity: 1, price: 120 },
+                    { name: 'Eggs', quantity: 24, price: 6 },
+                    { name: 'Bread', quantity: 2, price: 50 },
+                ],
+                customer: {
+                    name: 'Jane Doe',
+                    phone: '9123456781'
+                }
+            };
 
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
             root.render(
-                <Invoice {...props} />
+                <>
+                    <Invoice {...propsJohn} />
+                    <Invoice {...propsJane} />
+                </>
             );
         </script>
     </body>
