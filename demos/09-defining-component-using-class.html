@@ -1,0 +1,56 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Class component</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <style>
+            .btn {
+                padding: 0.5em;
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
+
+        <script type="text/babel">
+            class IconButton extends React.Component {
+                // this is the default constructor
+                // constructor( props ) {
+                //     super( props ); // this.props = props;
+                // }
+
+                // constructs the UI and return it
+                render() {
+                    const { text, color, icon } = this.props;
+
+                    return (
+                        <button
+                            style={{ backgroundColor: color, color: 'white', cursor: 'pointer' }}
+                            className="btn"
+                        >
+                            <i class={"fa-solid fa-" + icon} style={{ paddingRight: '8px' }}></i>
+                            {text}
+                        </button>
+                    );
+                }
+            }
+            
+            const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
+            root.render(
+                <>
+                    <IconButton text="Save" color="green" icon="floppy-disk" />
+                    <IconButton text="Submit" color="gray" icon="envelope" />
+                </>
+            );
+        </script>
+    </body>
+</html>
