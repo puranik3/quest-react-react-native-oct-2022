@@ -18,51 +18,63 @@
 
         <script type="text/babel">
             // EXERCISE: PLease convert all 3 components using class-based syntax
-            function TemperatureReport( { minTemp, maxTemp } ) {
-                return (
-                    <div>
-                        <span className="me-5">
-                            <i className="fa-solid fa-temperature-low me-2"></i>
-                            Minimum temperature - {minTemp} ℃
-                        </span>
-                        <span>
-                            <i className="fa-solid fa-temperature-high me-2"></i>
-                            Maximum temperature - {maxTemp} ℃
-                        </span>
-                    </div>
-                );
+            class TemperatureReport extends React.Component {
+                render() {
+                    const { minTemp, maxTemp } = this.props;
+
+                    return (
+                        <div>
+                            <span className="me-5">
+                                <i className="fa-solid fa-temperature-low me-2"></i>
+                                Minimum temperature - {minTemp} ℃
+                            </span>
+                            <span>
+                                <i className="fa-solid fa-temperature-high me-2"></i>
+                                Maximum temperature - {maxTemp} ℃
+                            </span>
+                        </div>
+                    );
+                }
             }
 
-            function RainfallReport( { humidity, rainfall } ) {
-                return (
-                    <div className="mt-3">
-                        <span className="me-5">
-                            <i className="fa-solid fa-droplet me-2"></i>
-                            Humidity - {humidity}%
-                        </span>
-                        <span>
-                            <i className="fa-solid fa-cloud-rain me-2"></i>
-                            Rainfall - {rainfall} mm
-                        </span>
-                    </div>
-                );
+            class RainfallReport extends React.Component {
+                render() {
+                    const { humidity, rainfall } = this.props;
+
+                    return (
+                        <div className="mt-3">
+                            <span className="me-5">
+                                <i className="fa-solid fa-droplet me-2"></i>
+                                Humidity - {humidity}%
+                            </span>
+                            <span>
+                                <i className="fa-solid fa-cloud-rain me-2"></i>
+                                Rainfall - {rainfall} mm
+                            </span>
+                        </div>
+                    );
+                }
             }
 
-            const WeatherReport = function( { city, minTemp, maxTemp, humidity, rainfall } ) {
-                return (
-                    <div className="card m-4 p-4">
-                        <h2 className="mb-4">Weather today at {city}</h2>
-                        <TemperatureReport
-                            minTemp={minTemp}
-                            maxTemp={maxTemp}
-                        />
-                        <RainfallReport
-                            humidity={humidity}
-                            rainfall={rainfall}
-                        />
-                    </div>
-                );
-            };
+            class WeatherReport extends React.Component {
+                render() {
+                    const { city, minTemp, maxTemp, humidity, rainfall } = this.props;
+
+                    return (
+                        <div className="card m-4 p-4">
+                            <h2 className="mb-4">Weather today at {city}</h2>
+                            <TemperatureReport
+                                minTemp={minTemp}
+                                maxTemp={maxTemp}
+                            />
+                            <RainfallReport
+                                humidity={humidity}
+                                rainfall={rainfall}
+                            />
+                        </div>
+                    );
+                }
+            }
             
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
             root.render(
