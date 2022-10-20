@@ -23,15 +23,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
 
         <script type="text/babel">
-            const CustomerDetails = ( { name, phone } ) => {
-                return (
-                    <div className="d-flex justify-content-between">
-                        <span>Name: {name}</span>
-                        <span>Phone: {phone}</span>
-                    </div>
-                );
-            };
-
             // a normal function - NOT a component
             const getTotal = ( items ) => {
                 return items.reduce(
@@ -40,7 +31,29 @@
                 );
             };
 
-            const InvoiceItem = ( { idx, name, quantity, price } ) => {
+            const Invoice = ( { items, customer, discountCoupon, prime } ) => {
+                return (
+                    <div className="card m-4 p-4 w-50">
+                        <h1 className="text-center">Invoice</h1>
+                        <Invoice.CustomerDetails {...customer} />
+                        <Invoice.InvoiceItems items={items} />
+                        <Invoice.Discount discountCoupon={discountCoupon} />
+                        <Invoice.PrimeMembershipMessage prime={prime} items={items} />
+                    </div>
+                );
+            };
+
+            // We make this component scoped to Invoice rather than a global function
+            Invoice.CustomerDetails = ( { name, phone } ) => {
+                return (
+                    <div className="d-flex justify-content-between">
+                        <span>Name: {name}</span>
+                        <span>Phone: {phone}</span>
+                    </div>
+                );
+            };
+
+            Invoice.InvoiceItem = ( { idx, name, quantity, price } ) => {
                 return (
                     <tr>
                         <td>{idx + 1}</td>
@@ -52,7 +65,7 @@
                 );
             };
 
-            const InvoiceItems = ( { items } ) => {
+            Invoice.InvoiceItems = ( { items } ) => {
                 const total = getTotal( items );
 
                 return (
@@ -68,7 +81,7 @@
                         </thead>
                         <tbody>
                             {
-                                items.map( ( item, idx ) => <InvoiceItem {...item} idx={idx} key={item.name} /> )
+                                items.map( ( item, idx ) => <Invoice.InvoiceItem {...item} idx={idx} key={item.name} /> )
                             }
                         </tbody>
                         <tfoot>
@@ -81,7 +94,7 @@
                 );
             };
 
-            const Discount = ( { discountCoupon } ) => {
+            Invoice.Discount = ( { discountCoupon } ) => {
                 return (
                     discountCoupon && (
                         <div className="alert alert-info text-center">Use <strong>{discountCoupon}</strong> to get a discount on your next purchase</div>
@@ -89,7 +102,7 @@
                 );
             };
 
-            const PrimeMembershipMessage = ( { prime, items } ) => {
+            Invoice.PrimeMembershipMessage = ( { prime, items } ) => {
                 const points = Math.round( getTotal( items ) / 100 );
 
                 return (
@@ -100,18 +113,6 @@
                     )
                 );
             }
-
-            const Invoice = ( { items, customer, discountCoupon, prime } ) => {
-                return (
-                    <div className="card m-4 p-4 w-50">
-                        <h1 className="text-center">Invoice</h1>
-                        <CustomerDetails {...customer} />
-                        <InvoiceItems items={items} />
-                        <Discount discountCoupon={discountCoupon} />
-                        <PrimeMembershipMessage prime={prime} items={items} />
-                    </div>
-                );
-            };
             
             const propsJohn = {
                 items: [
