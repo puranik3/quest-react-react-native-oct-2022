@@ -1,0 +1,66 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
+        <title>Panel - Parent-child communication</title>
+        <style>
+            body {
+                margin: 32px;
+            }
+            
+            .panel {
+                border: 1px solid #444;
+            }
+
+            .panel-question,
+            .panel-answer {
+                padding: 0.5em 1em;
+            }
+
+            .panel-question {
+                background-color: #444;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
+
+        <script type="text/babel">
+            const Panel = ( { question, answer } ) => {
+                return (
+                    <div className="panel">
+                        <Panel.Question question={question} />
+                        <Panel.Answer answer={answer} />
+                    </div>
+                );
+            };
+
+            Panel.Question = ( { question } ) => {
+                return (
+                    <div className="panel-question">{question}</div>
+                );
+            };
+            
+            Panel.Answer = ( { answer } ) => {
+                return (
+                    <div className="panel-answer">{answer}</div>
+                );
+            };
+            
+            const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
+            root.render(
+                <Panel question="What is React?" answer="It is a UI library created by Meta" />
+            );
+        </script>
+    </body>
+</html>
