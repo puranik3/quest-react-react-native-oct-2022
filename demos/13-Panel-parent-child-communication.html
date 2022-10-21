@@ -12,7 +12,7 @@
             body {
                 margin: 32px;
             }
-            
+
             .panel {
                 border: 1px solid #444;
             }
@@ -37,29 +37,36 @@
 
         <script type="text/babel">
             const Panel = ( { question, answer } ) => {
+                const [ show, setShow ] = React.useState( true );
+
+                const toggle = () => setShow( !show );
+
                 return (
                     <div className="panel">
-                        <Panel.Question question={question} />
-                        <Panel.Answer answer={answer} />
+                        <Panel.Question question={question} toggle={toggle} />
+                        <Panel.Answer answer={answer} show={show} />
                     </div>
                 );
             };
 
-            Panel.Question = ( { question } ) => {
+            Panel.Question = ( { question, toggle } ) => {
                 return (
-                    <div className="panel-question">{question}</div>
+                    <div className="panel-question" onClick={toggle}>{question}</div>
                 );
             };
             
-            Panel.Answer = ( { answer } ) => {
+            Panel.Answer = ( { answer, show } ) => {
                 return (
-                    <div className="panel-answer">{answer}</div>
+                    show && <div className="panel-answer">{answer}</div>
                 );
             };
             
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
             root.render(
-                <Panel question="What is React?" answer="It is a UI library created by Meta" />
+                <Panel
+                    question="What is React?"
+                    answer="It is a UI library created by Meta"
+                />
             );
         </script>
     </body>
