@@ -1,0 +1,53 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
+        <title>Maintaining state in class component</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
+
+        <script type="text/babel">
+            class Counter extends React.Component {
+                decrement = () => {
+                    console.log( 'decrement' );
+                    // setValue( value - 1 );
+                }
+
+                increment = () => {
+                    console.log( 'increment' );
+                    // setValue( value + 1 );
+                }
+
+                render() {
+                    const { initialValue } = this.props;
+
+                    return (
+                        <>
+                            <button onClick={this.decrement}>-</button>
+                            {initialValue}
+                            <button onClick={this.increment}>+</button>
+                        </>
+                    );
+                }
+            };
+            
+            const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
+            root.render(
+                <>
+                    <Counter initialValue={100} />
+                    <Counter initialValue={10} />
+                </>
+            );
+        </script>
+    </body>
+</html>
