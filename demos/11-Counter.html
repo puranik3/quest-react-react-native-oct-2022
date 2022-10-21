@@ -17,9 +17,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
 
         <script type="text/babel">
-            const Counter = () => {
+            const Counter = ( { initialValue } ) => {
+                console.log( 'rendered' );
+
                 // [ value, setValue ] is returned
-                const [ value, setValue ] = React.useState( 0 );
+                const [ value, setValue ] = React.useState( initialValue );
 
                 const decrement = () => setValue( value - 1 );
                 const increment = () => setValue( value + 1 );
@@ -30,14 +32,14 @@
                         {value}
                         <button onClick={increment}>+</button>
                     </>
-                )
+                );
             };
             
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
             root.render(
                 <>
-                    <Counter />
-                    <Counter />
+                    <Counter initialValue={100} />
+                    <Counter initialValue={10} />
                 </>
             );
         </script>

@@ -1,0 +1,170 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
+        <title>Invoice - Delete feature</title>
+        <style>
+            .price {
+                text-align: right;
+                font-family: monospace;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
+
+        <script type="text/babel">
+            // a normal function - NOT a component
+            const getTotal = ( items ) => {
+                return items.reduce(
+                    ( acc, item ) => acc + item.quantity * item.price,
+                    0
+                );
+            };
+
+            const Invoice = ( { items, customer, discountCoupon, prime } ) => {
+                const [ curItems, setCurItems ] = React.useState( items );
+
+                const deleteItem = ( idx ) => {
+                    console.log( idx );
+                };
+
+                return (
+                    <div className="card m-4 p-4 w-50">
+                        <h1 className="text-center">Invoice</h1>
+                        <Invoice.CustomerDetails {...customer} />
+                        <Invoice.InvoiceItems items={curItems} deleteItem={deleteItem} />
+                        <Invoice.Discount discountCoupon={discountCoupon} />
+                        <Invoice.PrimeMembershipMessage prime={prime} items={curItems} />
+                    </div>
+                );
+            };
+
+            // We make this component scoped to Invoice rather than a global function
+            Invoice.CustomerDetails = ( { name, phone } ) => {
+                return (
+                    <div className="d-flex justify-content-between">
+                        <span>Name: {name}</span>
+                        <span>Phone: {phone}</span>
+                    </div>
+                );
+            };
+
+            Invoice.InvoiceItem = ( { idx, name, quantity, price, deleteItem } ) => {
+                return (
+                    <tr>
+                        <td>{idx + 1}</td>
+                        <td>{name}</td>
+                        <td className="price">{quantity}</td>
+                        <td className="font-monospace text-end">{price}</td>
+                        <td className="font-monospace text-end">{quantity * price}</td>
+                        <td>
+                            <button
+                                className="btn btn-danger btn-sm"
+                                onClick={() => deleteItem( idx )}
+                            >
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                );
+            };
+
+            Invoice.InvoiceItems = ( { items, deleteItem } ) => {
+                const total = getTotal( items );
+
+                return (
+                    <table className="table table-bordered mt-3">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Name</th>
+                                <th className="text-end">Quantity</th>
+                                <th className="text-end">Price</th>
+                                <th className="text-end">Total</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                items.map( ( item, idx ) => <Invoice.InvoiceItem {...item} deleteItem={deleteItem} idx={idx} key={item.name} /> )
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colSpan={4}></td>
+                                <td className="font-monospace text-end">{total}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                );
+            };
+
+            Invoice.Discount = ( { discountCoupon } ) => {
+                return (
+                    discountCoupon && (
+                        <div className="alert alert-info text-center">Use <strong>{discountCoupon}</strong> to get a discount on your next purchase</div>
+                    )
+                );
+            };
+
+            Invoice.PrimeMembershipMessage = ( { prime, items } ) => {
+                const points = Math.round( getTotal( items ) / 100 );
+
+                return (
+                    prime ? (
+                        <div className="alert alert-primary text-center">Hurray! {points} points credited to your account.</div>
+                    ) : (
+                        <div className="alert alert-primary text-center">Register as  a PRIME member to get loyalty points credited to your account on every purchase.</div>
+                    )
+                );
+            }
+            
+            const propsJohn = {
+                items: [
+                    { name: 'Lays chips', quantity: 2, price: 30 },
+                    { name: 'Lion Dates', quantity: 1, price: 120 },
+                    { name: 'Eggs', quantity: 12, price: 6 },
+                    { name: 'Bread', quantity: 3, price: 50 },
+                ],
+                customer: {
+                    name: 'John Doe',
+                    phone: '9123456780'
+                },
+                discountCoupon: 'NEW10',
+                prime: false
+            };
+            
+            const propsJane = {
+                items: [
+                    { name: 'Close up toothpaste', quantity: 2, price: 120 },
+                    { name: 'Lion Dates', quantity: 1, price: 120 },
+                    { name: 'Eggs', quantity: 24, price: 6 },
+                    { name: 'Bread', quantity: 2, price: 50 },
+                ],
+                customer: {
+                    name: 'Jane Doe',
+                    phone: '9123456781'
+                },
+                prime: true
+            };
+
+            const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
+            root.render(
+                <>
+                    <Invoice {...propsJohn} />
+                    <Invoice {...propsJane} />
+                </>
+            );
+        </script>
+    </body>
+</html>
