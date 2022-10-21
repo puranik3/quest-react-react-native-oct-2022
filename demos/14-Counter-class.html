@@ -23,7 +23,7 @@
                     x: 100
                 };
 
-                // IMPORTANT: If we do not use arrow function syntax for functions that are passed as reference to React when they are set up as event handlers, then the "this" will not be set up correctly. Else, "this" would be undefined.
+                // IMPORTANT: If we do not use arrow function syntax for functions that are passed as reference to React when they are set up as event handlers, then the "this" will not be set up correctly ("this" would be undefined).
                 // decrement() { // "this" will not be set up correctly
                 decrement = () => {
                     console.log( this );
@@ -35,7 +35,7 @@
 
                 increment = () => {
                     console.log( this );
-                    
+
                     this.setState({
                         value: this.state.value + 1
                     });
