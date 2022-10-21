@@ -18,23 +18,32 @@
 
         <script type="text/babel">
             class Counter extends React.Component {
+                state = {
+                    value: this.props.initialValue,
+                    x: 100
+                };
+
                 decrement = () => {
                     console.log( 'decrement' );
-                    // setValue( value - 1 );
+                    this.setState({
+                        value: this.state.value - 1
+                    });
                 }
 
                 increment = () => {
                     console.log( 'increment' );
-                    // setValue( value + 1 );
+                    this.setState({
+                        value: this.state.value + 1
+                    });
                 }
 
                 render() {
-                    const { initialValue } = this.props;
+                    const { value } = this.state;
 
                     return (
                         <>
                             <button onClick={this.decrement}>-</button>
-                            {initialValue}
+                            {value}
                             <button onClick={this.increment}>+</button>
                         </>
                     );
