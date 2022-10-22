@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
-        <title>WorkshopsList - useEffect()</title>
+        <title>WorkshopsList - Lifecycle methods for side-effects</title>
     </head>
     <body>
         <div id="root"></div>
@@ -30,121 +30,144 @@
                 return response.data;
             };
 
-            const WorkshopsList = () => {
-                const [ loading, setLoading ] = React.useState( true );
-                const [ workshops, setWorkshops ] = React.useState( [] );
-                const [ error, setError ] = React.useState( null );
-                const [ page, setPage ] = React.useState( 1 );
-
-                const nextPage = () => {
-                    if( workshops.length !== 10 ) {
-                        return;
-                    }
-
-                    setPage( page + 1 );
-                };
-                
-                const previousPage = () => {
-                    if( page <= 1 ) {
-                        return;
-                    }
-
-                    setPage( page - 1 );
-                };
-
-                // NOTE: If we do not pass an array as second argument, the side-effect runs every time there is a render, and this can lead to recursive calls of the side-effect if the side-effect sets state
-                // this effect runs on first render, and when render hapens after "page" changes
-                // React.useEffect(
-                //     () => {
-                //         console.log( 'page has changed' );
-                //     },
-                //     [ page ]
-                // );
-
-                // to implement side-effects (logic apart from constructing and returning the UI)
-                React.useEffect(
-                    // side-effect functions cannot be async (restriction by React)
-                    () => { // side-effect
-                        const helper = async () => {
-                            try {
-                                const data = await getWorkshops( page );
-                                setWorkshops( data );
-                            } catch( error ) {
-                                setError( error );
-                            } finally {
-                                setLoading( false );
-                            }
-                        }
-
-                        helper();
-                    },
-                    // [] // empty array -> the side-effect executes ONLY on component load (after first render)
-                    [ page ] // this effect runs on first render, and when render hapens after "page" changes
-                );
-
+            const WorkshopsListItem = ( { workshop } ) => {
                 return (
-                    <div className="container my-4">
-                        <h1>List of Workshops</h1>
-                        <hr />
-                        {
-                            loading && (
-                                <div className="d-flex justify-content-center">
-                                    <div className="spinner-border" role="status">
-                                        <span className="visually-hidden">Loading...</span>
-                                    </div>
-                                </div>
-                            )
-                        }
-                        {
-                            !loading && workshops.length !== 0 && (
-                                <>
-                                    <button
-                                        className="btn btn-primary btn-sm my-3"
-                                        onClick={previousPage}
-                                        disabled={page <= 1}
-                                    >
-                                        Previous
-                                    </button>
-                                    <button
-                                        className="btn btn-primary btn-sm my-3"
-                                        onClick={nextPage}
-                                        disabled={workshops.length < 10}
-                                    >
-                                        Next page
-                                    </button>
-                                    <p>You are viewing results on page {page}</p>
-                                    <div className="row">
-                                    {
-                                        workshops.map(
-                                            workshop => (
-                                                <div className="col-12 col-lg-4 d-flex my-2" key={workshop.id}>
-                                                    <div className="card p-3" style={{width: '100%'}}>
-                                                        <img src={workshop.imageUrl} className="card-img-top" alt={workshop.name} />
-                                                        <div className="card-body">
-                                                            <h5 className="card-title">{workshop.name}</h5>
-                                                            <p className="card-text">{workshop.location.city}, {workshop.location.state}</p>
-                                                            <a href="#" className="btn btn-primary">Know more</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        )
-                                    }
-                                    </div>
-                                </>
-                            )
-                        }
-                        {
-                            !loading && error && (
-                                <div className="alert alert-danger" role="alert">
-                                    {error.message}
-                                    {/*error.response.data*/}
-                                </div>
-                            )
-                        }
+                    <div className="card p-3" style={{width: '100%'}}>
+                        <img src={workshop.imageUrl} className="card-img-top" alt={workshop.name} />
+                        <div className="card-body">
+                            <h5 className="card-title">{workshop.name}</h5>
+                            <p className="card-text">{workshop.location.city}, {workshop.location.state}</p>
+                            <a href="#" className="btn btn-primary">Know more</a>
+                        </div>
                     </div>
                 );
             };
+
+            class WorkshopsList extends React.Component {
+                state = {
+                    loading: true,
+                    workshops: [],
+                    error: null,
+                    page: 1
+                };
+                // constructor( props ) {
+                //     super( props );
+
+                //     this.state = {}
+                // }
+
+                nextPage = () => {
+                    if( this.state.workshops.length !== 10 ) {
+                        return;
+                    }
+
+                    this.setState({
+                        page: this.state.page + 1
+                    });
+                };
+                
+                previousPage = () => {
+                    if( this.state.page <= 1 ) {
+                        return;
+                    }
+
+                    this.setState({
+                        page: this.state.page - 1
+                    });
+                };
+
+                // cdm
+                // called after first render
+                componentDidMount() { 
+                    console.log( 'componentDidMount : first render' );
+                }
+
+                // called after a prop / state change
+                componentDidUpdate( prevProps, prevState ) {
+                    console.log( prevState, this.state );
+                }
+
+                // to implement side-effects (logic apart from constructing and returning the UI)
+                // React.useEffect(
+                //     // side-effect functions cannot be async (restriction by React)
+                //     () => { // side-effect
+                //         const helper = async () => {
+                //             try {
+                //                 const data = await getWorkshops( page );
+                //                 setWorkshops( data );
+                //             } catch( error ) {
+                //                 setError( error );
+                //             } finally {
+                //                 setLoading( false );
+                //             }
+                //         }
+
+                //         helper();
+                //     },
+                //     // [] // empty array -> the side-effect executes ONLY on component load (after first render)
+                //     [ page ] // this effect runs on first render, and when render hapens after "page" changes
+                // );
+
+                render() {
+                    const { loading, workshops, error, page } = this.state;
+
+                    return (
+                        <div className="container my-4">
+                            <h1>List of Workshops</h1>
+                            <hr />
+                            {
+                                loading && (
+                                    <div className="d-flex justify-content-center">
+                                        <div className="spinner-border" role="status">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                            {
+                                !loading && workshops.length !== 0 && (
+                                    <>
+                                        <button
+                                            className="btn btn-primary btn-sm my-3"
+                                            onClick={this.previousPage}
+                                            disabled={page <= 1}
+                                        >
+                                            Previous
+                                        </button>
+                                        <button
+                                            className="btn btn-primary btn-sm my-3"
+                                            onClick={this.nextPage}
+                                            disabled={workshops.length < 10}
+                                        >
+                                            Next page
+                                        </button>
+                                        <p>You are viewing results on page {page}</p>
+                                        <div className="row">
+                                        {
+                                            workshops.map(
+                                                workshop => (
+                                                    <div className="col-12 col-lg-4 d-flex my-2" key={workshop.id}>
+                                                        <WorkshopsListItem workshop={workshop} />
+                                                    </div>
+                                                )
+                                            )
+                                        }
+                                        </div>
+                                    </>
+                                )
+                            }
+                            {
+                                !loading && error && (
+                                    <div className="alert alert-danger" role="alert">
+                                        {error.message}
+                                        {/*error.response.data*/}
+                                    </div>
+                                )
+                            }
+                        </div>
+                    );
+                }
+            }
             
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
             root.render( <WorkshopsList /> );
