@@ -28,12 +28,37 @@
             };
 
             const WorkshopsList = () => {
+                const [ loading, setLoading ] = React.useState( true );
+
+                // to implement side-effects (logic apart from constructing and returning the UI)
+                React.useEffect(
+                    // side-effect functions cannot be async (restriction by React)
+                    () => { // side-effect
+                        const helper = async () => {
+                            const data = await getWorkshops();
+                            console.log( data );
+                        }
+
+                        helper();
+                    },
+                    [] // empty array -> the side-effect executes ONLY on component load (after first render)
+                );
+
                 return (
                     <div className="container my-4">
                         <h1>List of Workshops</h1>
                         <hr />
+                        {
+                            loading && (
+                                <div className="d-flex justify-content-center">
+                                    <div className="spinner-border" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            )
+                        }
                     </div>
-                )
+                );
             };
             
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
