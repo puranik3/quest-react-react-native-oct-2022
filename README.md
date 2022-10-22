@@ -15,3 +15,6 @@
 - Oct 21
     - 01 Lab guide
         - Q. 11 (need to explore componentDidMount() lifecycle method)
+- Oct 22
+    - 01 Lab guide
+        - Q. 10, 11, 14, 15
