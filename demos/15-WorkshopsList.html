@@ -37,6 +37,10 @@
                 const [ page, setPage ] = React.useState( 1 );
 
                 const nextPage = () => {
+                    if( workshops.length !== 10 ) {
+                        return;
+                    }
+
                     setPage( page + 1 );
                 };
 
@@ -88,6 +92,7 @@
                                     <button
                                         className="btn btn-primary btn-sm my-3"
                                         onClick={nextPage}
+                                        disabled={workshops.length < 10}
                                     >
                                         Next page
                                     </button>
