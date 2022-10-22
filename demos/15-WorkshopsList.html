@@ -52,6 +52,7 @@
                     setPage( page - 1 );
                 };
 
+                // NOTE: If we do not pass an array as second argument, the side-effect runs every time there is a render, and this can lead to recursive calls of the side-effect if the side-effect sets state
                 // this effect runs on first render, and when render hapens after "page" changes
                 // React.useEffect(
                 //     () => {
@@ -112,13 +113,24 @@
                                         Next page
                                     </button>
                                     <p>You are viewing results on page {page}</p>
+                                    <div className="row">
                                     {
                                         workshops.map(
                                             workshop => (
-                                                <div key={workshop.id}>{workshop.name}</div>
+                                                <div className="col-12 col-lg-4 d-flex my-2" key={workshop.id}>
+                                                    <div className="card p-3" style={{width: '100%'}}>
+                                                        <img src={workshop.imageUrl} className="card-img-top" alt={workshop.name} />
+                                                        <div className="card-body">
+                                                            <h5 className="card-title">{workshop.name}</h5>
+                                                            <p className="card-text">{workshop.location.city}, {workshop.location.state}</p>
+                                                            <a href="#" className="btn btn-primary">Know more</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             )
                                         )
                                     }
+                                    </div>
                                 </>
                             )
                         }
