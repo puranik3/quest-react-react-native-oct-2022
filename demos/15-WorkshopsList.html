@@ -43,6 +43,14 @@
 
                     setPage( page + 1 );
                 };
+                
+                const previousPage = () => {
+                    if( page <= 1 ) {
+                        return;
+                    }
+
+                    setPage( page - 1 );
+                };
 
                 // this effect runs on first render, and when render hapens after "page" changes
                 // React.useEffect(
@@ -89,6 +97,13 @@
                         {
                             !loading && workshops.length !== 0 && (
                                 <>
+                                    <button
+                                        className="btn btn-primary btn-sm my-3"
+                                        onClick={previousPage}
+                                        disabled={page <= 1}
+                                    >
+                                        Previous
+                                    </button>
                                     <button
                                         className="btn btn-primary btn-sm my-3"
                                         onClick={nextPage}
