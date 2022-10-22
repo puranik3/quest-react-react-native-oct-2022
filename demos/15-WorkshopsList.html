@@ -19,16 +19,13 @@
 
         <script type="text/babel">
             const getWorkshops = async () => {
-                // try {
-                    const response = await axios.get( `https://workshops-server.herokuapp.com/workshops` );
-                    return response.data;
-                // } catch( error ) {
-
-                // }
+                const response = await axios.get( `https://workshops-server.herokuapp.com/workshops` );
+                return response.data;
             };
 
             const WorkshopsList = () => {
                 const [ loading, setLoading ] = React.useState( true );
+                const [ workshops, setWorkshops ] = React.useState( [] );
 
                 // to implement side-effects (logic apart from constructing and returning the UI)
                 React.useEffect(
@@ -36,7 +33,8 @@
                     () => { // side-effect
                         const helper = async () => {
                             const data = await getWorkshops();
-                            console.log( data );
+                            setWorkshops( data );
+                            setLoading( false );
                         }
 
                         helper();
@@ -55,6 +53,15 @@
                                         <span className="visually-hidden">Loading...</span>
                                     </div>
                                 </div>
+                            )
+                        }
+                        {
+                            !loading && workshops.length !== 0 && (
+                                workshops.map(
+                                    workshop => (
+                                        <div key={workshop.id}>{workshop.name}</div>
+                                    )
+                                )
                             )
                         }
                     </div>
