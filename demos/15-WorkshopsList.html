@@ -36,6 +36,18 @@
                 const [ error, setError ] = React.useState( null );
                 const [ page, setPage ] = React.useState( 1 );
 
+                const nextPage = () => {
+                    setPage( page + 1 );
+                };
+
+                // this effect runs on first render, and when render hapens after "page" changes
+                // React.useEffect(
+                //     () => {
+                //         console.log( 'page has changed' );
+                //     },
+                //     [ page ]
+                // );
+
                 // to implement side-effects (logic apart from constructing and returning the UI)
                 React.useEffect(
                     // side-effect functions cannot be async (restriction by React)
@@ -53,7 +65,8 @@
 
                         helper();
                     },
-                    [] // empty array -> the side-effect executes ONLY on component load (after first render)
+                    // [] // empty array -> the side-effect executes ONLY on component load (after first render)
+                    [ page ] // this effect runs on first render, and when render hapens after "page" changes
                 );
 
                 return (
@@ -71,11 +84,22 @@
                         }
                         {
                             !loading && workshops.length !== 0 && (
-                                workshops.map(
-                                    workshop => (
-                                        <div key={workshop.id}>{workshop.name}</div>
-                                    )
-                                )
+                                <>
+                                    <button
+                                        className="btn btn-primary btn-sm my-3"
+                                        onClick={nextPage}
+                                    >
+                                        Next page
+                                    </button>
+                                    <p>You are viewing results on page {page}</p>
+                                    {
+                                        workshops.map(
+                                            workshop => (
+                                                <div key={workshop.id}>{workshop.name}</div>
+                                            )
+                                        )
+                                    }
+                                </>
                             )
                         }
                         {
