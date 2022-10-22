@@ -101,6 +101,7 @@
                     this.fetchWorkshops();
                 }
 
+                // cdu
                 // called after a prop / state change
                 componentDidUpdate( prevProps, prevState ) {
                     console.log( prevState, this.state );
@@ -109,6 +110,11 @@
                         // fetch data for current page
                         this.fetchWorkshops();
                     }
+                }
+
+                // cwun
+                componentWillUnmount() {
+                    console.log( 'Anything side-effect to be executed when component goes off the screen can be done here...' );
                 }
 
                 render() {
@@ -174,6 +180,13 @@
             
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
             root.render( <WorkshopsList /> );
+
+            setTimeout(
+                () => {
+                    root.render( <div className="container my-4">That's all folks!</div> );
+                },
+                10000 // 10 seconds
+            )
         </script>
     </body>
 </html>
