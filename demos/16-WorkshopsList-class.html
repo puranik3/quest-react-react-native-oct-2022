@@ -76,37 +76,40 @@
                     });
                 };
 
+                async fetchWorkshops() {
+                    try {
+                        const data = await getWorkshops( this.state.page );
+
+                        this.setState({
+                            workshops: data,
+                            loading: false
+                        });
+                    } catch( error ) {
+                        this.setState({
+                            error: error,
+                            loading: false
+                        });
+                    }
+                }
+
                 // cdm
                 // called after first render
                 componentDidMount() { 
                     console.log( 'componentDidMount : first render' );
+                    
+                    // fetch data for current page
+                    this.fetchWorkshops();
                 }
 
                 // called after a prop / state change
                 componentDidUpdate( prevProps, prevState ) {
                     console.log( prevState, this.state );
+
+                    if( prevState.page !== this.state.page ) {
+                        // fetch data for current page
+                        this.fetchWorkshops();
+                    }
                 }
-
-                // to implement side-effects (logic apart from constructing and returning the UI)
-                // React.useEffect(
-                //     // side-effect functions cannot be async (restriction by React)
-                //     () => { // side-effect
-                //         const helper = async () => {
-                //             try {
-                //                 const data = await getWorkshops( page );
-                //                 setWorkshops( data );
-                //             } catch( error ) {
-                //                 setError( error );
-                //             } finally {
-                //                 setLoading( false );
-                //             }
-                //         }
-
-                //         helper();
-                //     },
-                //     // [] // empty array -> the side-effect executes ONLY on component load (after first render)
-                //     [ page ] // this effect runs on first render, and when render hapens after "page" changes
-                // );
 
                 render() {
                     const { loading, workshops, error, page } = this.state;
