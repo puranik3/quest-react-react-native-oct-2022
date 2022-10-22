@@ -26,15 +26,21 @@
             const WorkshopsList = () => {
                 const [ loading, setLoading ] = React.useState( true );
                 const [ workshops, setWorkshops ] = React.useState( [] );
+                const [ error, setError ] = React.useState( null );
 
                 // to implement side-effects (logic apart from constructing and returning the UI)
                 React.useEffect(
                     // side-effect functions cannot be async (restriction by React)
                     () => { // side-effect
                         const helper = async () => {
-                            const data = await getWorkshops();
-                            setWorkshops( data );
-                            setLoading( false );
+                            try {
+                                const data = await getWorkshops();
+                                setWorkshops( data );
+                            } catch( error ) {
+                                setError( error );
+                            } finally {
+                                setLoading( false );
+                            }
                         }
 
                         helper();
@@ -62,6 +68,14 @@
                                         <div key={workshop.id}>{workshop.name}</div>
                                     )
                                 )
+                            )
+                        }
+                        {
+                            !loading && error && (
+                                <div className="alert alert-danger" role="alert">
+                                    {error.message}
+                                    {/*error.response.data*/}
+                                </div>
                             )
                         }
                     </div>
