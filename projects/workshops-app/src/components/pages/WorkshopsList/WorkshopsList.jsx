@@ -26,18 +26,7 @@ const WorkshopsList = () => {
         setPage( page - 1 );
     };
 
-    // NOTE: If we do not pass an array as second argument, the side-effect runs every time there is a render, and this can lead to recursive calls of the side-effect if the side-effect sets state
-    // this effect runs on first render, and when render hapens after "page" changes
-    // useEffect(
-    //     () => {
-    //         console.log( 'page has changed' );
-    //     },
-    //     [ page ]
-    // );
-
-    // to implement side-effects (logic apart from constructing and returning the UI)
     useEffect(
-        // side-effect functions cannot be async (restriction by React)
         () => { // side-effect
             const helper = async () => {
                 try {
@@ -52,8 +41,7 @@ const WorkshopsList = () => {
 
             helper();
         },
-        // [] // empty array -> the side-effect executes ONLY on component load (after first render)
-        [ page ] // this effect runs on first render, and when render hapens after "page" changes
+        [ page ]
     );
 
     return (
