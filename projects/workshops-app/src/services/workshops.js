@@ -12,7 +12,13 @@ const getWorkshops = async ( page ) => {
     return response.data;
 };
 
+const getWorkshopById = async ( id ) => {
+    const response = await axios.get( `https://workshops-server.herokuapp.com/workshops/${id}` );
+    return response.data;
+};
+
 // named exports
 export {
-    getWorkshops
+    getWorkshops,
+    getWorkshopById
 };
