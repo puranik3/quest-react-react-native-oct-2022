@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
 import { getWorkshopById } from '../../../services/workshops';
@@ -37,18 +38,28 @@ const WorkshopDetails = () => {
                 loading && (
                     <div className="d-flex justify-content-center">
                         <div className="spinner-border" role="status">
-                            <span className="visually-hidden">Loading workshops' details...</span>
+                            <span className="visually-hidden">Loading workshop's details...</span>
                         </div>
                     </div>
                 )
             }
             {
                 !loading && workshop && (
-                    <>
-                        <div className="row">
-                            {workshop.name}
-                        </div>
-                    </>
+                    <Row>
+                        <Col xs={12} lg={4}>
+                            <Image src={workshop.imageUrl} alt={workshop.name} fluid />
+                        </Col>
+                        <Col xs={12} lg={8}>
+                            <Row xs={2} lg={4} className="text-sm">
+                                <Col>
+                                    <div>{workshop.startDate} - {workshop.endDate}</div>
+                                    <div>{workshop.time}</div>
+                                </Col>
+                                <Col></Col>
+                            </Row>
+                            <div className="row" dangerouslySetInnerHTML={{ __html: workshop.description }} />
+                        </Col>
+                    </Row>
                 )
             }
             {

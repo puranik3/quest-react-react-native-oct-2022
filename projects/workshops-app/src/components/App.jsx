@@ -5,6 +5,8 @@ import Home from "./pages/Home/Home";
 import WorkshopsList from './pages/WorkshopsList/WorkshopsList';
 import WorkshopDetails from './pages/WorkshopDetails/WorkshopDetails';
 
+import './App.css';
+
 function App() {
     return (
         <>
