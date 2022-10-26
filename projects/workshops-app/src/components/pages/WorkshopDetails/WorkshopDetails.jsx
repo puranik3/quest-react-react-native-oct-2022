@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Moment from 'react-moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import { getWorkshopById } from '../../../services/workshops';
 
@@ -58,9 +60,24 @@ const WorkshopDetails = () => {
                                         {' - '}
                                         <Moment format="MMM DD, yyyy">{workshop.endDate}</Moment>
                                     </div>
-                                    <div className="my-2">{workshop.time}</div>
+                                    <div className="my-3 text-muted">{workshop.time}</div>
                                 </Col>
-                                <Col></Col>
+                                <Col>
+                                    <div>
+                                        <FontAwesomeIcon
+                                            className="me-2"
+                                            icon={workshop.modes.inPerson ? faCheck : faTimes}
+                                        />
+                                        In-person
+                                    </div>
+                                    <div>
+                                        <FontAwesomeIcon
+                                            className="me-2"
+                                            icon={workshop.modes.online ? faCheck : faTimes}
+                                        />
+                                        Online
+                                    </div>
+                                </Col>
                             </Row>
                             <div className="row" dangerouslySetInnerHTML={{ __html: workshop.description }} />
                         </Col>
