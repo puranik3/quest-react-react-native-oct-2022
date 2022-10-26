@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Row, Col } from 'react-bootstrap';
 
 import WorkshopsListItem from "./WorkshopsListItem/WorkshopsListItem";
 
@@ -75,17 +76,17 @@ const WorkshopsList = () => {
                             Next page
                         </button>
                         <p>You are viewing results on page {page}</p>
-                        <div className="row">
+                        <Row xs={1} lg={3}>
                         {
                             workshops.map(
                                 workshop => (
-                                    <div className="col-12 col-lg-4 d-flex my-2" key={workshop.id}>
+                                    <Col className="d-flex my-2" key={workshop.id}>
                                         <WorkshopsListItem workshop={workshop} />
-                                    </div>
+                                    </Col>
                                 )
                             )
                         }
-                        </div>
+                        </Row>
                     </>
                 )
             }
