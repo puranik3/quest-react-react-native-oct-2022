@@ -3,7 +3,8 @@ import { Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import SessionsList from './SessionsList/SessionsList';
 
 import { getWorkshopById } from '../../../services/workshops';
 
@@ -91,6 +92,7 @@ const WorkshopDetails = () => {
                     </div>
                 )
             }
+            <SessionsList id={workshop?.id} />
         </>
     );
 }
