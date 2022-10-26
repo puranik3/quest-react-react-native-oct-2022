@@ -33,10 +33,26 @@ const SessionsList = ( { id } ) => {
             <h2>List of sessions</h2>
             <hr />
             {
+                loading && (
+                    <div className="d-flex justify-content-center">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading list of sessions for the workshop</span>
+                        </div>
+                    </div>
+                )
+            }
+            {
                 sessions.map(
                     session => (
                         <div key={session.id}>{session.name}</div>
                     )
+                )
+            }
+            {
+                !loading && error && (
+                    <div className="alert alert-danger" role="alert">
+                        {error.message}
+                    </div>
                 )
             }
         </div>
