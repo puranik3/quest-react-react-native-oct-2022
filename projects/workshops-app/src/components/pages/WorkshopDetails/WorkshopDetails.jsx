@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import Moment from 'react-moment';
 
 import { getWorkshopById } from '../../../services/workshops';
 
@@ -52,8 +53,12 @@ const WorkshopDetails = () => {
                         <Col xs={12} lg={8}>
                             <Row xs={2} lg={4} className="text-sm">
                                 <Col>
-                                    <div>{workshop.startDate} - {workshop.endDate}</div>
-                                    <div>{workshop.time}</div>
+                                    <div>
+                                        <Moment format="MMM DD, yyyy">{workshop.startDate}</Moment>
+                                        {' - '}
+                                        <Moment format="MMM DD, yyyy">{workshop.endDate}</Moment>
+                                    </div>
+                                    <div className="my-2">{workshop.time}</div>
                                 </Col>
                                 <Col></Col>
                             </Row>
