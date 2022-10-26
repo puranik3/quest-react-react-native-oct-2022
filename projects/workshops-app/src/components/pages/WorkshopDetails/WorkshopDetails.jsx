@@ -30,7 +30,35 @@ const WorkshopDetails = () => {
     );
 
     return (
-        <div>workshop details works! ({id})</div>
+        <>
+            <h1>{workshop?.name || 'Details of the workshop'}</h1>
+            <hr />
+            {
+                loading && (
+                    <div className="d-flex justify-content-center">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading workshops' details...</span>
+                        </div>
+                    </div>
+                )
+            }
+            {
+                !loading && workshop && (
+                    <>
+                        <div className="row">
+                            {workshop.name}
+                        </div>
+                    </>
+                )
+            }
+            {
+                !loading && error && (
+                    <div className="alert alert-danger" role="alert">
+                        {error.message}
+                    </div>
+                )
+            }
+        </>
     );
 }
  
