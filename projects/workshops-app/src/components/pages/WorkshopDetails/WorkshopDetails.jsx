@@ -92,7 +92,7 @@ const WorkshopDetails = () => {
                     </div>
                 )
             }
-            <SessionsList id={workshop?.id} />
+            <SessionsList id={id} />
         </>
     );
 }
