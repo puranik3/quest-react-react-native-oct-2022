@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ListGroup } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import SessionsListItem from './SessionsListItem/SessionsListItem';
 
 import { getSessionsForWorkshopWithId, vote as voteSvc } from '../../../../services/sessions';
@@ -15,7 +16,7 @@ const SessionsList = ( { id } ) => {
         
         setSessions( newSessions );
         
-        alert( `Your vote for ${updatedSession.name} has been registered` );
+        toast.success( `Your vote for ${updatedSession.name} has been registered` );
     };
 
     useEffect(
