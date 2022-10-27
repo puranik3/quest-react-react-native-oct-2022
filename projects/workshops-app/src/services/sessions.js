@@ -5,6 +5,12 @@ const getSessionsForWorkshopWithId = async ( id ) => {
     return response.data;
 };
 
+const vote = async ( sessionId, voteType ) => {
+    const response = await axios.put( `https://workshops-server.herokuapp.com/sessions/${sessionId}/${voteType}` );
+    return response.data;
+};
+
 export {
-    getSessionsForWorkshopWithId
+    getSessionsForWorkshopWithId,
+    vote
 };

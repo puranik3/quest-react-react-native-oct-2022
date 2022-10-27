@@ -2,15 +2,20 @@ import { useState, useEffect } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import SessionsListItem from './SessionsListItem/SessionsListItem';
 
-import { getSessionsForWorkshopWithId } from '../../../../services/sessions';
+import { getSessionsForWorkshopWithId, vote as voteSvc } from '../../../../services/sessions';
 
 const SessionsList = ( { id } ) => {
     const [ loading, setLoading ] = useState( true );
     const [ sessions, setSessions ] = useState( [] );
     const [ error, setError ] = useState( null );
 
-    const vote = ( sessionId, voteType ) => {
-        alert( sessionId + ' ' + voteType );
+    const vote = async ( sessionId, voteType ) => {
+        const updatedSession = await voteSvc( sessionId, voteType );
+        const newSessions = sessions.map( session => session.id !== sessionId ? session : updatedSession );
+        
+        setSessions( newSessions );
+        
+        alert( `Your vote for ${updatedSession.name} has been registered` );
     };
 
     useEffect(
