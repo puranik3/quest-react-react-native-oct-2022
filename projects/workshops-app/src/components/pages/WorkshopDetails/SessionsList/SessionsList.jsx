@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import SessionsListItem from './SessionsListItem/SessionsListItem';
 
@@ -9,6 +9,7 @@ const SessionsList = ( { id } ) => {
     const [ loading, setLoading ] = useState( true );
     const [ sessions, setSessions ] = useState( [] );
     const [ error, setError ] = useState( null );
+    const [ filterKey, setFilterKey ] = useState( '' );
 
     const vote = async ( sessionId, voteType ) => {
         try {
@@ -45,6 +46,14 @@ const SessionsList = ( { id } ) => {
         <div>
             <h2>List of sessions</h2>
             <hr />
+            <Form.Control
+                type="search"
+                placeholder="Filter by session name, abstract"
+                className="my-3"
+                onChange={( event ) => setFilterKey( event.target.value )}
+                value={filterKey}
+            />
+            <div className="my-3">You typed: {filterKey}</div>
             {
                 loading && (
                     <div className="d-flex justify-content-center">
