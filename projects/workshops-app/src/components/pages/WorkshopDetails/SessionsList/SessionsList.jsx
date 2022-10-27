@@ -11,12 +11,16 @@ const SessionsList = ( { id } ) => {
     const [ error, setError ] = useState( null );
 
     const vote = async ( sessionId, voteType ) => {
-        const updatedSession = await voteSvc( sessionId, voteType );
-        const newSessions = sessions.map( session => session.id !== sessionId ? session : updatedSession );
-        
-        setSessions( newSessions );
-        
-        toast.success( `Your vote for ${updatedSession.name} has been registered` );
+        try {
+            const updatedSession = await voteSvc( sessionId, voteType );
+            const newSessions = sessions.map( session => session.id !== sessionId ? session : updatedSession );
+            
+            setSessions( newSessions );
+            
+            toast.success( `Your vote for ${updatedSession.name} has been registered` );
+        } catch( error ) {
+            toast.error( error.message );
+        }
     };
 
     useEffect(
