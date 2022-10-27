@@ -10,6 +10,7 @@ const SessionsList = ( { id } ) => {
     const [ sessions, setSessions ] = useState( [] );
     const [ error, setError ] = useState( null );
     const [ filterKey, setFilterKey ] = useState( '' );
+    const [ filteredSessions, setFilteredSessions ] = useState( [] );
 
     const vote = async ( sessionId, voteType ) => {
         try {
@@ -42,10 +43,22 @@ const SessionsList = ( { id } ) => {
         [ id ] // run the effect whenever a new value for id is sent as prop from the details component
     );
 
+    useEffect(
+        () => {
+            setFilteredSessions(
+                sessions.filter(
+                    session => session.name.toLowerCase().includes( filterKey.toLowerCase() ) || session.abstract.toLowerCase().includes( filterKey.toLowerCase() )
+                )
+            );
+        },
+        [ sessions, filterKey ]
+    );
+
     return (
         <div>
             <h2>List of sessions</h2>
             <hr />
+            
             <Form.Control
                 type="search"
                 placeholder="Filter by session name, abstract"
@@ -53,7 +66,9 @@ const SessionsList = ( { id } ) => {
                 onChange={( event ) => setFilterKey( event.target.value )}
                 value={filterKey}
             />
+            
             <div className="my-3">You typed: {filterKey}</div>
+            
             {
                 loading && (
                     <div className="d-flex justify-content-center">
@@ -67,7 +82,7 @@ const SessionsList = ( { id } ) => {
                 !loading && sessions.length !== 0 && (
                     <ListGroup>
                         {
-                            sessions.map(
+                            filteredSessions.map(
                                 session => (
                                     <SessionsListItem
                                         key={session.id}
