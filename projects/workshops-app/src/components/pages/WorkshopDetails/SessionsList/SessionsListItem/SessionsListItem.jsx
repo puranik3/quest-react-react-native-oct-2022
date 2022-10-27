@@ -4,7 +4,20 @@ import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import { formatDuration } from '../../../../../utils/datetime';
 
-const SessionsListItem = ( { name, speaker, level, duration, abstract, upvoteCount, id, workshopId, sequenceId } ) => {
+import './SessionsListItem.css';
+
+const SessionsListItem = (
+    {
+        name,
+        speaker,
+        level,
+        duration,
+        abstract,
+        upvoteCount,
+        id,
+        vote
+    }
+) => {
     const getLevelBadge = level => {
         const bg = {
             Basic: 'primary',
@@ -19,9 +32,19 @@ const SessionsListItem = ( { name, speaker, level, duration, abstract, upvoteCou
         <ListGroupItem>
             <Row>
                 <Col xs={1} className="d-flex flex-column align-items-center">
-                    <FontAwesomeIcon icon={faCaretUp} size="2x" />
+                    <FontAwesomeIcon
+                        icon={faCaretUp}
+                        size="2x"
+                        className="vote"
+                        onClick={() => vote( id, 'upvote' )}
+                    />
                     {upvoteCount}
-                    <FontAwesomeIcon icon={faCaretDown} size="2x" />
+                    <FontAwesomeIcon
+                        icon={faCaretDown}
+                        size="2x"
+                        className="vote"
+                        onClick={() => vote( id, 'downvote' )}
+                    />
                 </Col>
                 <Col xs={11}>
                     <div className="mb-2">{name}</div>

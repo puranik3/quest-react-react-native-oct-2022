@@ -9,6 +9,10 @@ const SessionsList = ( { id } ) => {
     const [ sessions, setSessions ] = useState( [] );
     const [ error, setError ] = useState( null );
 
+    const vote = ( sessionId, voteType ) => {
+        alert( sessionId + ' ' + voteType );
+    };
+
     useEffect(
         () => {
             const helper = async () => {
@@ -49,6 +53,7 @@ const SessionsList = ( { id } ) => {
                                     <SessionsListItem
                                         key={session.id}
                                         {...session}
+                                        vote={vote}
                                     />
                                 )
                             )
