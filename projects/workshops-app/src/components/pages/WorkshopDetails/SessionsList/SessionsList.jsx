@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { ListGroup } from 'react-bootstrap';
+import SessionsListItem from './SessionsListItem/SessionsListItem';
 
 import { getSessionsForWorkshopWithId } from '../../../../services/sessions';
 
@@ -39,10 +41,19 @@ const SessionsList = ( { id } ) => {
                 )
             }
             {
-                sessions.map(
-                    session => (
-                        <div key={session.id}>{session.name}</div>
-                    )
+                !loading && sessions.length !== 0 && (
+                    <ListGroup>
+                        {
+                            sessions.map(
+                                session => (
+                                    <SessionsListItem
+                                        key={session.id}
+                                        {...session}
+                                    />
+                                )
+                            )
+                        }
+                    </ListGroup>
                 )
             }
             {
