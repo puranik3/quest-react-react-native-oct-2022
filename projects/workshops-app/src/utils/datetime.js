@@ -1,5 +1,7 @@
+const pad = n => ( n + '' ).padStart( 2, '0' );
+
 // units = 'minutes' | 'hours' | 'hh:mm:ss'
-const formatDuration = ( durationInHours, units ) => {
+const formatDuration = ( durationInHours, units = 'split' ) => {
     let seconds, minutes, hours;
 
     switch( units ) {
@@ -12,7 +14,7 @@ const formatDuration = ( durationInHours, units ) => {
             minutes = Math.floor( seconds / 60 );
             seconds -= minutes * 60;
             
-            return `${hours}:${minutes}:${seconds}`;
+            return `${pad( hours )}:${pad( minutes )}:${pad( seconds )}`;
         case 'minutes':
             minutes = Math.round( durationInHours * 60 );
             return  `${minutes} minutes`;

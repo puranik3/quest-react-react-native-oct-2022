@@ -31,7 +31,7 @@ const SessionsListItem = ( { name, speaker, level, duration, abstract, upvoteCou
                     <div className="mb-2">
                         <Badge bg={getLevelBadge( level )}>{level}</Badge>
                     </div>
-                    <div className="mb-2">{formatDuration( duration, 'split' )}</div>
+                    <div className="mb-2">{formatDuration( duration )}</div>
                     <div className="mb-2">{abstract}</div>
                 </Col>
             </Row>
