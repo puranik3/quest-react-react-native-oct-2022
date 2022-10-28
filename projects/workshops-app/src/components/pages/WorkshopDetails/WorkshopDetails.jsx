@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route, NavLink } from 'react-router-dom';
 import { Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import SessionsList from './SessionsList/SessionsList';
+import AddSession from './AddSession/AddSession';
 
 import { getWorkshopById } from '../../../services/workshops';
 
@@ -92,7 +94,22 @@ const WorkshopDetails = () => {
                     </div>
                 )
             }
-            <SessionsList id={id} />
+
+            {/* The "end" prop ensures a full match of the current URL to the link "to" URL is made during matching (otherwise a prefix match is made) */}
+            <NavLink to={`/workshops/${id}`} end className="me-2">Sessions List</NavLink>
+            <NavLink to={`/workshops/${id}/add`}>Add a session</NavLink>
+
+            {/* "child routes" of /workshops/:id */}
+            <Routes>
+                <Route
+                    path=""
+                    element={<SessionsList id={id} />}
+                />
+                <Route
+                    path="/add"
+                    element={<AddSession id={id} />}
+                />
+            </Routes>
         </>
     );
 }

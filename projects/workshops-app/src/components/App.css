@@ -1,3 +1,10 @@
 .text-sm {
     font-size: 0.85rem;
 }
+
+.active,
+.active:hover {
+    color: crimson;
+    font-weight: normal;
+    text-decoration: none;
+}

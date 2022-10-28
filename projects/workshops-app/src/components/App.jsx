@@ -27,7 +27,7 @@ function App() {
                         element={<WorkshopsList />}
                     />
                     <Route 
-                        path="/workshops/:id"
+                        path="/workshops/:id/*"
                         element={<WorkshopDetails />}
                     />
                 </Routes>
