@@ -62,7 +62,7 @@ const WorkshopsList = () => {
 
             <Form.Control
                 type="search"
-                placeholder="Filter by session name, abstract"
+                placeholder="Filter by workshop name"
                 className="my-3"
                 onChange={( event ) => setFilterKey( event.target.value )}
                 value={filterKey}
