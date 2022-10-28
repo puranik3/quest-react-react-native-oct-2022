@@ -1,11 +1,36 @@
+import { useRef } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
+// "uncontrolled component" pattern to work with forms -> we create a "ref" (a reference to the input DOM node) for every input element
 const AddSession = ({ id }) => {
+    const sequenceIdRef = useRef();
+    const nameRef = useRef();
+    const speakerRef = useRef();
+    const levelRef = useRef();
+    const durationRef = useRef();
+    const abstractRef = useRef();
+
+    const addSession = ( event ) => {
+        // avoid form submission (and page will refresh)
+        event.preventDefault();
+
+        const session = {
+            sequenceId: sequenceIdRef.current.value,
+            name: nameRef.current.value,
+            speaker: speakerRef.current.value,
+            level: levelRef.current.value,
+            duration: durationRef.current.value,
+            abstract: abstractRef.current.value
+        };
+
+        console.log( session );
+    };
+
     return (
         <div>
             <h2>Add a session</h2>
             <hr />
-            <Form>
+            <Form onSubmit={addSession}>
                 <Form.Group
                     as={Row}
                     className="mb-3"
@@ -15,7 +40,11 @@ const AddSession = ({ id }) => {
                         Sequence ID
                     </Form.Label>
                     <Col sm={10}>
-                        <Form.Control type="number" placeholder="Order of the session (1, 2, 3 etc.)" />
+                        <Form.Control
+                            type="number"
+                            placeholder="Order of the session (1, 2, 3 etc.)"
+                            ref={sequenceIdRef}
+                        />
                     </Col>
                 </Form.Group>
 
@@ -28,7 +57,11 @@ const AddSession = ({ id }) => {
                         Name
                     </Form.Label>
                     <Col sm={10}>
-                        <Form.Control type="text" placeholder="Name of the session" />
+                        <Form.Control
+                            type="text"
+                            placeholder="Name of the session"
+                            ref={nameRef}
+                        />
                     </Col>
                 </Form.Group>
                 
@@ -41,7 +74,11 @@ const AddSession = ({ id }) => {
                         Speaker(s)
                     </Form.Label>
                     <Col sm={10}>
-                        <Form.Control type="text" placeholder="Names of the speakers for the session" />
+                        <Form.Control
+                            type="text"
+                            placeholder="Names of the speakers for the session"
+                            ref={speakerRef}
+                        />
                     </Col>
                 </Form.Group>
                 
@@ -54,7 +91,10 @@ const AddSession = ({ id }) => {
                         Duration
                     </Form.Label>
                     <Col sm={10}>
-                        <Form.Control type="text" />
+                        <Form.Control
+                            type="text"
+                            ref={durationRef}
+                        />
                     </Col>
                 </Form.Group>
                 
@@ -67,7 +107,10 @@ const AddSession = ({ id }) => {
                         Level
                     </Form.Label>
                     <Col sm={10}>
-                        <Form.Select aria-label="Select a level">
+                        <Form.Select
+                            aria-label="Select a level"
+                            ref={levelRef}
+                        >
                             <option>Open this select menu</option>
                             <option value="Basic">Basic</option>
                             <option value="Intermediate">Intermediate</option>
@@ -85,7 +128,10 @@ const AddSession = ({ id }) => {
                         Asbtract
                     </Form.Label>
                     <Col sm={10}>
-                        <Form.Control as="textarea" />
+                        <Form.Control
+                            as="textarea"
+                            ref={abstractRef}
+                        />
                     </Col>
                 </Form.Group>
                 
