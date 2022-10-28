@@ -3,14 +3,14 @@ import { ListGroup, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import SessionsListItem from './SessionsListItem/SessionsListItem';
 
+import useFilter from '../../../../hooks/useFilter';
+
 import { getSessionsForWorkshopWithId, vote as voteSvc } from '../../../../services/sessions';
 
 const SessionsList = ( { id } ) => {
     const [ loading, setLoading ] = useState( true );
     const [ sessions, setSessions ] = useState( [] );
     const [ error, setError ] = useState( null );
-    const [ filterKey, setFilterKey ] = useState( '' );
-    const [ filteredSessions, setFilteredSessions ] = useState( [] );
 
     const vote = async ( sessionId, voteType ) => {
         try {
@@ -43,16 +43,11 @@ const SessionsList = ( { id } ) => {
         [ id ] // run the effect whenever a new value for id is sent as prop from the details component
     );
 
-    useEffect(
-        () => {
-            setFilteredSessions(
-                sessions.filter(
-                    session => session.name.toLowerCase().includes( filterKey.toLowerCase() ) || session.abstract.toLowerCase().includes( filterKey.toLowerCase() )
-                )
-            );
-        },
-        [ sessions, filterKey ]
-    );
+    const {
+        filterKey,
+        setFilterKey,
+        filteredSessions
+    } = useFilter( sessions );
 
     return (
         <div>
