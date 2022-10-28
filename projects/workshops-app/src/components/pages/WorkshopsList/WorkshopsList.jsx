@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Form } from 'react-bootstrap';
 
 import WorkshopsListItem from "./WorkshopsListItem/WorkshopsListItem";
 
 import { getWorkshops } from '../../../services/workshops';
+
+import useFilter from '../../../hooks/useFilter';
+
+const sessionFilteringKeys = [ 'name' ];
 
 const WorkshopsList = () => {
     const [ loading, setLoading ] = useState( true );
@@ -45,10 +49,27 @@ const WorkshopsList = () => {
         [ page ]
     );
 
+    const {
+        filterKey,
+        setFilterKey,
+        filteredItems : filteredWorkshops
+    } = useFilter( workshops, sessionFilteringKeys );
+
     return (
         <>
             <h1>List of Workshops</h1>
             <hr />
+
+            <Form.Control
+                type="search"
+                placeholder="Filter by session name, abstract"
+                className="my-3"
+                onChange={( event ) => setFilterKey( event.target.value )}
+                value={filterKey}
+            />
+
+            <div className="my-3">You typed: {filterKey}</div>
+
             {
                 loading && (
                     <div className="d-flex justify-content-center">
@@ -78,7 +99,7 @@ const WorkshopsList = () => {
                         <p>You are viewing results on page {page}</p>
                         <Row xs={1} lg={3}>
                         {
-                            workshops.map(
+                            filteredWorkshops.map(
                                 workshop => (
                                     <Col className="d-flex my-2" key={workshop.id}>
                                         <WorkshopsListItem workshop={workshop} />

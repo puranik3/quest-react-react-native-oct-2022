@@ -1,25 +1,27 @@
 import { useState, useEffect } from 'react';
 
-const useFilter = ( sessions ) => {
+const useFilter = ( items, keys ) => {
     const [ filterKey, setFilterKey ] = useState( '' );
-    const [ filteredSessions, setFilteredSessions ] = useState( [] );
+    const [ filteredItems, setFilteredItems ] = useState( [] );
 
     useEffect(
         () => {
-            setFilteredSessions(
-                sessions.filter(
-                    session => session.name.toLowerCase().includes( filterKey.toLowerCase() ) || session.abstract.toLowerCase().includes( filterKey.toLowerCase() )
+            setFilteredItems(
+                items.filter(
+                    session => keys.some(
+                        key => session[key].toLowerCase().includes (filterKey.toLowerCase() )
+                    )
                 )
             );
         },
-        [ sessions, filterKey ]
+        [ items, filterKey, keys ]
     );
 
     return {
         // filterKey: filterKey,
         filterKey,
         setFilterKey,
-        filteredSessions
+        filteredItems
     };
 };
 

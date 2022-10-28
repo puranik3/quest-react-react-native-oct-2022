@@ -7,6 +7,9 @@ import useFilter from '../../../../hooks/useFilter';
 
 import { getSessionsForWorkshopWithId, vote as voteSvc } from '../../../../services/sessions';
 
+// we have created this array outside the component to avoid creating and passing a new array to useFilter every time the component re-renders. Since useFilter sets a state, this will cause re-render, and the recursive call chain continues. We must avoid this.
+const sessionFilteringKeys = [ 'name', 'abstract' ];
+
 const SessionsList = ( { id } ) => {
     const [ loading, setLoading ] = useState( true );
     const [ sessions, setSessions ] = useState( [] );
@@ -46,8 +49,9 @@ const SessionsList = ( { id } ) => {
     const {
         filterKey,
         setFilterKey,
-        filteredSessions
-    } = useFilter( sessions );
+        // destructure filteredItems but create a variable called filteredSessions
+        filteredItems : filteredSessions
+    } = useFilter( sessions, sessionFilteringKeys );
 
     return (
         <div>
