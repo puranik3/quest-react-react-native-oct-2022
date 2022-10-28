@@ -1,5 +1,8 @@
 import { useRef } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+
+import { addSession as addSessionSvc } from '../../../../services/sessions';
 
 // "uncontrolled component" pattern to work with forms -> we create a "ref" (a reference to the input DOM node) for every input element
 const AddSession = ({ id }) => {
@@ -10,20 +13,27 @@ const AddSession = ({ id }) => {
     const durationRef = useRef();
     const abstractRef = useRef();
 
-    const addSession = ( event ) => {
+    const addSession = async ( event ) => {
         // avoid form submission (and page will refresh)
         event.preventDefault();
 
         const session = {
-            sequenceId: sequenceIdRef.current.value,
+            workshopId: +id,
+            upvoteCount: 0,
+            sequenceId: +sequenceIdRef.current.value,
             name: nameRef.current.value,
             speaker: speakerRef.current.value,
             level: levelRef.current.value,
-            duration: durationRef.current.value,
+            duration: +durationRef.current.value,
             abstract: abstractRef.current.value
         };
 
-        console.log( session );
+        try {
+            const updatedSession = await addSessionSvc( session );
+            toast.success( `Added session ${updatedSession.name} with id = ${updatedSession.id}` );
+        } catch( error ) {
+            toast.error( error.message );
+        }
     };
 
     return (
