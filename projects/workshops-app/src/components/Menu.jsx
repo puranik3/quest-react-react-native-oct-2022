@@ -1,4 +1,4 @@
-import { Nav, Navbar, Container } from "react-bootstrap";
+import { Nav, Navbar, Container, Button } from "react-bootstrap";
 import { NavLink } from 'react-router-dom';
 
 import './Menu.css';
@@ -15,6 +15,9 @@ const Menu = ( { theme, toggleTheme } ) => {
                         <Nav.Link to="/" as={NavLink} end>Home</Nav.Link>
                         <Nav.Link to="/workshops" as={NavLink}>List of workshops</Nav.Link>
                         <Nav.Link to="/feedback" as={NavLink}>Feedback</Nav.Link>
+                    </Nav>
+                    <Nav>
+                        <Button onClick={toggleTheme} variant="warning">Change theme</Button>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
