@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Container } from 'react-bootstrap';
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -5,10 +6,16 @@ import Menu from "./Menu";
 import Home from "./pages/Home/Home";
 import WorkshopsList from './pages/WorkshopsList/WorkshopsList';
 import WorkshopDetails from './pages/WorkshopDetails/WorkshopDetails';
-import Feedback from './pages/Feedback/Feedback';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+
+// not the way to import lazily-loaded component
+// if we do this anywhere, the component and its children code will be part of the main bundle
+// import Feedback from './pages/Feedback/Feedback';
+
+// way to import a lazy-loaded component
+const Feedback = lazy( () => import( './pages/Feedback/Feedback' ) );
 
 function App() {
     return (
@@ -33,7 +40,11 @@ function App() {
                     />
                     <Route 
                         path="/feedback"
-                        element={<Feedback />}
+                        element={
+                            <Suspense loading={<div>Loading feedback</div>}>
+                                <Feedback />
+                            </Suspense>
+                        }
                     />
                 </Routes>
             </Container>
