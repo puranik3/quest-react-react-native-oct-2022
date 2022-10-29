@@ -1,42 +1,44 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { addSession as addSessionSvc } from '../../../../services/sessions';
 
 // "controlled component" pattern to work with forms -> we create a "state" to hold the value for every input element. The state variable is going to "control" the input. When the input changes we set the state variable.
 const AddSession = ({ id }) => {
+    const navigate = useNavigate();
+
     const { register, handleSubmit, formState : { errors }, getValues }= useForm({
         mode: 'all' // do validations on all events - submit, change etc.
     });
 
-    const addSession = async ( event ) => {
-        event.preventDefault();
+    // since we wrapped in a call to handleSubmit, this function is called on submit only if the form is valid
+    // the form submission is also prevented automatically
+    const addSession = async ( values ) => {
 
-        // const session = {
-        //     workshopId: +id,
-        //     upvoteCount: 0,
-        //     sequenceId: +sequenceId.trim(),
-        //     name: name.trim(),
-        //     speaker: speaker.trim(),
-        //     level: level.trim(),
-        //     duration: +duration.trim(),
-        //     abstract: abstract.trim()
-        // };
+        const session = {
+            workshopId: +id,
+            upvoteCount: 0,
+            ...values, // has all 6 form field values
+            sequenceId: +values.sequenceId,
+            duration: +values.duration
+        };
 
-        // try {
-        //     const updatedSession = await addSessionSvc( session );
-        //     toast.success( `Added session ${updatedSession.name} with id = ${updatedSession.id}` );
-        // } catch( error ) {
-        //     toast.error( error.message );
-        // }
+        try {
+            const updatedSession = await addSessionSvc( session );
+            toast.success( `Added session ${updatedSession.name} with id = ${updatedSession.id}` );
+            navigate( '/workshops/' + id );
+        } catch( error ) {
+            toast.error( error.message );
+        }
     };
 
     return (
         <div>
             <h2>Add a session</h2>
             <hr />
-            <Form onSubmit={addSession} noValidate>
+            <Form onSubmit={handleSubmit(addSession)} noValidate>
                 <Form.Group
                     as={Row}
                     className="mb-3"
