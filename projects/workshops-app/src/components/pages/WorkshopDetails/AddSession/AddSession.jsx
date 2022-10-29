@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -94,10 +95,7 @@ const AddSession = ({ id }) => {
         }
     };
 
-    const addSession = async ( event ) => {
-        // avoid form submission (and page will refresh)
-        event.preventDefault();
-        
+    const validate = () => {
         let isValid = true;
 
         isValid = validateSequenceId() && isValid;
@@ -107,7 +105,21 @@ const AddSession = ({ id }) => {
         isValid = validateLevel() && isValid;
         isValid = validateAbstract() && isValid;
 
-        if( !isValid ) {
+        return isValid;
+    }
+
+    useEffect(
+        () => {
+            validate();
+        },
+        [ sequenceId, name, speaker, duration, level, abstract ]
+    );
+
+    const addSession = async ( event ) => {
+        // avoid form submission (and page will refresh)
+        event.preventDefault();
+        
+        if( !validate() ) {
             return;
         }
 
