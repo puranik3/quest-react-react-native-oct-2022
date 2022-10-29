@@ -9,7 +9,7 @@ import useFilter from '../../../hooks/useFilter';
 
 const sessionFilteringKeys = [ 'name' ];
 
-const WorkshopsList = () => {
+const WorkshopsList = ( { theme } ) => {
     const [ loading, setLoading ] = useState( true );
     const [ workshops, setWorkshops ] = useState( [] );
     const [ error, setError ] = useState( null );
@@ -102,7 +102,8 @@ const WorkshopsList = () => {
                             filteredWorkshops.map(
                                 workshop => (
                                     <Col className="d-flex my-2" key={workshop.id}>
-                                        <WorkshopsListItem workshop={workshop} />
+                                        <WorkshopsListItem workshop={workshop}
+                                        theme={theme} />
                                     </Col>
                                 )
                             )

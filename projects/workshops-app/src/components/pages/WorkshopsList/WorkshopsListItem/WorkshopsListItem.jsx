@@ -1,15 +1,23 @@
+import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const WorkshopsListItem = ( { workshop } ) => {
+const WorkshopsListItem = ( { workshop, theme } ) => {
     return (
-        <div className="card p-3" style={{width: '100%'}}>
-            <img src={workshop.imageUrl} className="card-img-top" alt={workshop.name} />
-            <div className="card-body">
-                <h5 className="card-title">{workshop.name}</h5>
+        <Card
+            bg={theme}
+            text={theme === 'light' ? 'dark' : 'white'}
+            style={{ width: '100%' }}
+            className="p-3"
+        >
+            <Card.Img src={workshop.imageUrl} alt={workshop.name} />
+            <Card.Body>
+            <Card.Title>{workshop.name}</Card.Title>
+            <Card.Text>
                 <p className="card-text">{workshop.location.city}, {workshop.location.state}</p>
                 <Link to={"/workshops/" + workshop.id} className="btn btn-primary">Know more</Link>
-            </div>
-        </div>
+            </Card.Text>
+            </Card.Body>
+        </Card>
     );
 };
 

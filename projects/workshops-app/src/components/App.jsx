@@ -37,7 +37,7 @@ function App() {
                     />
                     <Route 
                         path="/workshops"
-                        element={<WorkshopsList />}
+                        element={<WorkshopsList theme={theme} />}
                     />
                     <Route 
                         path="/workshops/:id/*"
