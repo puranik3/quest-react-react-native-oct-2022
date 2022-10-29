@@ -18,3 +18,7 @@
 - Oct 22
     - 01 Lab guide
         - Q. 10, 11, 14, 15
+- Oct 29
+    - 01 Lab Guide
+        - Weather application questions - Q.14 - 25 (very lengthy)
+        - Todo list app (8 hours)
