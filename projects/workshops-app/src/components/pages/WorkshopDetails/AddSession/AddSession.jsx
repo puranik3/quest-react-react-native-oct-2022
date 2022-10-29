@@ -60,7 +60,7 @@ const AddSession = ({ id }) => {
         <div>
             <h2>Add a session</h2>
             <hr />
-            <Form onSubmit={addSession}>
+            <Form onSubmit={addSession} noValidate>
                 <Form.Group
                     as={Row}
                     className="mb-3"
@@ -74,8 +74,11 @@ const AddSession = ({ id }) => {
                             type="number"
                             placeholder="Order of the session (1, 2, 3 etc.)"
                             ref={sequenceIdRef}
+                            isInvalid={!!sequenceIdErr}
                         />
-                        <div className="text-danger">{sequenceIdErr}</div>
+                        <Form.Control.Feedback type="invalid">
+                            {sequenceIdErr}
+                        </Form.Control.Feedback>
                     </Col>
                 </Form.Group>
 
