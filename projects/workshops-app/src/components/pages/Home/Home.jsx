@@ -1,7 +1,7 @@
 // sfc
-const Home = () => {
+const Home = ( { theme } ) => {
     return (
-        <div className="border border-secondary p-5 bg-light">
+        <div className={`border border-secondary p-5 bg-${theme} text-${theme === 'dark' ? 'light' : 'dark' }`}>
             <h1>Workshops App</h1>
             <hr />
 

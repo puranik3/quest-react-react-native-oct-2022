@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom';
 import './Menu.css';
 
 // sfc
-const Menu = () => {
+const Menu = ( { theme, toggleTheme } ) => {
     return (
-        <Navbar bg="light" variant="light" expand="lg">
+        <Navbar bg={theme} variant={theme} expand="lg">
             <Container>
                 <Navbar.Brand to="/" as={NavLink} end>Workshops App</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

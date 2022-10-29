@@ -9,6 +9,7 @@ import WorkshopDetails from './pages/WorkshopDetails/WorkshopDetails';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+import { useState } from 'react';
 
 // not the way to import lazily-loaded component
 // if we do this anywhere, the component and its children code will be part of the main bundle
@@ -18,17 +19,21 @@ import './App.css';
 const Feedback = lazy( () => import( './pages/Feedback/Feedback' ) );
 
 function App() {
+    const [ theme, setTheme ] = useState( 'dark' );
+
+    const toggleTheme = () => setTheme( theme === 'light' ? 'dark' : 'light' );
+
     return (
         <>
             <ToastContainer
                 autoClose={5000}
             />
-            <Menu />
+            <Menu theme={theme} toggleTheme={toggleTheme} />
             <Container className="my-4">
                 <Routes>
                     <Route 
                         path="/"
-                        element={<Home />}
+                        element={<Home theme={theme} />}
                     />
                     <Route 
                         path="/workshops"
