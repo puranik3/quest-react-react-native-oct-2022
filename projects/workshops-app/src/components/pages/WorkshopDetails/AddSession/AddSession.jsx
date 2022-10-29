@@ -82,7 +82,7 @@ const AddSession = ({ id }) => {
                             errors.name && (
                                 <Form.Control.Feedback type="invalid">
                                     {
-                                        errors.name.required === 'required' && 'Name is required'
+                                        errors.name.type === 'required' && 'Name is required'
                                     }
                                     {
                                         errors.name.type === 'pattern' && 'Name must consist of A-Z, a - z, spaces and 0 - 9'
