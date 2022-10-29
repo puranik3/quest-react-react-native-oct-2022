@@ -14,6 +14,11 @@ const AddSession = ({ id }) => {
     const abstractRef = useRef();
 
     const [ sequenceIdErr, setSequencIdErr ] = useState( '' );
+    const [ nameErr, setNameErr ] = useState( '' );
+    const [ speakerErr, setSpeakerErr ] = useState( '' );
+    const [ durationErr, setDurationErr ] = useState( '' );
+    const [ levelErr, setLevelErr ] = useState( '' );
+    const [ abstractErr, setAbstractErr ] = useState( '' );
 
     // should be a positive integer
     const validateSequenceId = () => {
@@ -29,23 +34,92 @@ const AddSession = ({ id }) => {
         }
     };
 
+    const validateName = () => {
+        const value = nameRef.current.value.trim();
+        
+        if( value !== '' ) {
+            setNameErr( '' );
+            return true;
+        } else {
+            setNameErr( 'Name is required' );
+            return false;
+        }
+    };
+    
+    const validateSpeaker = () => {
+        const value = speakerRef.current.value.trim();
+        
+        if( value !== '' ) {
+            setSpeakerErr( '' );
+            return true;
+        } else {
+            setSpeakerErr( 'Speaker name is required' );
+            return false;
+        }
+    };
+    
+    const validateLevel = () => {
+        const value = levelRef.current.value.trim();
+        
+        if( value !== '' ) {
+            setLevelErr( '' );
+            return true;
+        } else {
+            setSpeakerErr( 'Select the level' );
+            return false;
+        }
+    };
+    
+    const validateDuration = () => {
+        const value = durationRef.current.value.trim();
+        
+        if( value !== '' ) {
+            setDurationErr( '' );
+            return true;
+        } else {
+            setDurationErr( 'Duration is required' );
+            return false;
+        }
+    };
+    
+    const validateAbstract = () => {
+        const value = abstractRef.current.value.trim();
+        
+        if( value !== '' ) {
+            setAbstractErr( '' );
+            return true;
+        } else {
+            setAbstractErr( 'Abstract is required' );
+            return false;
+        }
+    };
+
     const addSession = async ( event ) => {
         // avoid form submission (and page will refresh)
         event.preventDefault();
+        
+        let isValid = true;
 
-        if( !validateSequenceId() ) {
+        isValid = validateSequenceId() && isValid;
+        isValid = validateName() && isValid;
+        isValid = validateSpeaker() && isValid;
+        isValid = validateDuration() && isValid;
+        isValid = validateLevel() && isValid;
+        isValid = validateAbstract() && isValid;
+
+        if( !isValid ) {
             return;
         }
 
         const session = {
             workshopId: +id,
             upvoteCount: 0,
-            sequenceId: +sequenceIdRef.current.value,
-            name: nameRef.current.value,
-            speaker: speakerRef.current.value,
-            level: levelRef.current.value,
-            duration: +durationRef.current.value,
-            abstract: abstractRef.current.value
+            sequenceId: +sequenceIdRef.current.value.trim(),
+            name: nameRef.current.value.trim(),
+            speaker: speakerRef.current.value.trim(),
+            level: levelRef.current.value.trim(),
+            duration: +durationRef.current.value.trim(),
+            abstract: abstractRef.current.value.trim()
         };
 
         try {
@@ -95,7 +169,11 @@ const AddSession = ({ id }) => {
                             type="text"
                             placeholder="Name of the session"
                             ref={nameRef}
+                            isInvalid={!!nameErr}
                         />
+                        <Form.Control.Feedback type="invalid">
+                            {nameErr}
+                        </Form.Control.Feedback>
                     </Col>
                 </Form.Group>
                 
@@ -112,7 +190,11 @@ const AddSession = ({ id }) => {
                             type="text"
                             placeholder="Names of the speakers for the session"
                             ref={speakerRef}
+                            isInvalid={!!speakerErr}
                         />
+                        <Form.Control.Feedback type="invalid">
+                            {speakerErr}
+                        </Form.Control.Feedback>
                     </Col>
                 </Form.Group>
                 
@@ -128,7 +210,11 @@ const AddSession = ({ id }) => {
                         <Form.Control
                             type="text"
                             ref={durationRef}
+                            isInvalid={!!durationErr}
                         />
+                        <Form.Control.Feedback type="invalid">
+                            {durationErr}
+                        </Form.Control.Feedback>
                     </Col>
                 </Form.Group>
                 
@@ -144,12 +230,16 @@ const AddSession = ({ id }) => {
                         <Form.Select
                             aria-label="Select a level"
                             ref={levelRef}
+                            isInvalid={!!levelErr}
                         >
-                            <option>Open this select menu</option>
+                            <option value="">Open this select menu</option>
                             <option value="Basic">Basic</option>
                             <option value="Intermediate">Intermediate</option>
                             <option value="Advanced">Advanced</option>
                         </Form.Select>
+                        <Form.Control.Feedback type="invalid">
+                            {levelErr}
+                        </Form.Control.Feedback>
                     </Col>
                 </Form.Group>
 
@@ -165,7 +255,11 @@ const AddSession = ({ id }) => {
                         <Form.Control
                             as="textarea"
                             ref={abstractRef}
+                            isInvalid={!!abstractErr}
                         />
+                        <Form.Control.Feedback type="invalid">
+                            {abstractErr}
+                        </Form.Control.Feedback>
                     </Col>
                 </Form.Group>
                 
