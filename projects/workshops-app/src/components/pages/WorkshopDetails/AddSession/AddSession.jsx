@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
@@ -13,9 +13,29 @@ const AddSession = ({ id }) => {
     const durationRef = useRef();
     const abstractRef = useRef();
 
+    const [ sequenceIdErr, setSequencIdErr ] = useState( '' );
+
+    // should be a positive integer
+    const validateSequenceId = () => {
+        const pat = /^[0-9]+$/;
+        const value = sequenceIdRef.current.value;
+
+        if( pat.test( value ) ) {
+            setSequencIdErr( '' );
+            return true;
+        } else {
+            setSequencIdErr( 'Sequence ID must be a positive integer like 1, 5, etc.' );
+            return false;
+        }
+    };
+
     const addSession = async ( event ) => {
         // avoid form submission (and page will refresh)
         event.preventDefault();
+
+        if( !validateSequenceId() ) {
+            return;
+        }
 
         const session = {
             workshopId: +id,
@@ -55,6 +75,7 @@ const AddSession = ({ id }) => {
                             placeholder="Order of the session (1, 2, 3 etc.)"
                             ref={sequenceIdRef}
                         />
+                        <div className="text-danger">{sequenceIdErr}</div>
                     </Col>
                 </Form.Group>
 
