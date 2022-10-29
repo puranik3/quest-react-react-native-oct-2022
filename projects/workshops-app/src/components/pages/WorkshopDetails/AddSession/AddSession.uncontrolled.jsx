@@ -1,17 +1,17 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 import { addSession as addSessionSvc } from '../../../../services/sessions';
 
-// "controlled component" pattern to work with forms -> we create a "state" to hold the value for every input element. The state variable is going to "control" the input. When the input changes we set the state variable.
+// "uncontrolled component" pattern to work with forms -> we create a "ref" (a reference to the input DOM node) for every input element
 const AddSession = ({ id }) => {
-    const [ sequenceId, setSequenceId ] = useState( '' );
-    const [ name, setName ] = useState( '' );
-    const [ speaker, setSpeaker ] = useState( '' );
-    const [ level, setLevel ] = useState( '' );
-    const [ duration, setDuration ] = useState( '' );
-    const [ abstract, setAbstract ] = useState( '' );
+    const sequenceIdRef = useRef();
+    const nameRef = useRef();
+    const speakerRef = useRef();
+    const levelRef = useRef();
+    const durationRef = useRef();
+    const abstractRef = useRef();
 
     const [ sequenceIdErr, setSequencIdErr ] = useState( '' );
     const [ nameErr, setNameErr ] = useState( '' );
@@ -23,7 +23,7 @@ const AddSession = ({ id }) => {
     // should be a positive integer
     const validateSequenceId = () => {
         const pat = /^[0-9]+$/;
-        const value = sequenceId;
+        const value = sequenceIdRef.current.value;
 
         if( pat.test( value ) ) {
             setSequencIdErr( '' );
@@ -35,7 +35,7 @@ const AddSession = ({ id }) => {
     };
 
     const validateName = () => {
-        const value = name;
+        const value = nameRef.current.value.trim();
         
         if( value !== '' ) {
             setNameErr( '' );
@@ -47,7 +47,7 @@ const AddSession = ({ id }) => {
     };
     
     const validateSpeaker = () => {
-        const value = speaker;
+        const value = speakerRef.current.value.trim();
         
         if( value !== '' ) {
             setSpeakerErr( '' );
@@ -59,7 +59,7 @@ const AddSession = ({ id }) => {
     };
     
     const validateDuration = () => {
-        const value = duration;
+        const value = durationRef.current.value.trim();
         
         if( value !== '' ) {
             setDurationErr( '' );
@@ -71,7 +71,7 @@ const AddSession = ({ id }) => {
     };
 
     const validateLevel = () => {
-        const value = level;
+        const value = levelRef.current.value.trim();
         
         if( value !== '' ) {
             setLevelErr( '' );
@@ -83,7 +83,7 @@ const AddSession = ({ id }) => {
     };
     
     const validateAbstract = () => {
-        const value = abstract;
+        const value = abstractRef.current.value.trim();
         
         if( value !== '' ) {
             setAbstractErr( '' );
@@ -114,12 +114,12 @@ const AddSession = ({ id }) => {
         const session = {
             workshopId: +id,
             upvoteCount: 0,
-            sequenceId: +sequenceId.trim(),
-            name: name.trim(),
-            speaker: speaker.trim(),
-            level: level.trim(),
-            duration: +duration.trim(),
-            abstract: abstract.trim()
+            sequenceId: +sequenceIdRef.current.value.trim(),
+            name: nameRef.current.value.trim(),
+            speaker: speakerRef.current.value.trim(),
+            level: levelRef.current.value.trim(),
+            duration: +durationRef.current.value.trim(),
+            abstract: abstractRef.current.value.trim()
         };
 
         try {
@@ -147,8 +147,7 @@ const AddSession = ({ id }) => {
                         <Form.Control
                             type="number"
                             placeholder="Order of the session (1, 2, 3 etc.)"
-                            value={sequenceId}
-                            onChange={( event ) => setSequenceId( event.target.value )}
+                            ref={sequenceIdRef}
                             isInvalid={!!sequenceIdErr}
                         />
                         <Form.Control.Feedback type="invalid">
@@ -169,8 +168,7 @@ const AddSession = ({ id }) => {
                         <Form.Control
                             type="text"
                             placeholder="Name of the session"
-                            value={name}
-                            onChange={( event ) => setName( event.target.value )}
+                            ref={nameRef}
                             isInvalid={!!nameErr}
                         />
                         <Form.Control.Feedback type="invalid">
@@ -191,8 +189,7 @@ const AddSession = ({ id }) => {
                         <Form.Control
                             type="text"
                             placeholder="Names of the speakers for the session"
-                            value={speaker}
-                            onChange={( event ) => setSpeaker( event.target.value )}
+                            ref={speakerRef}
                             isInvalid={!!speakerErr}
                         />
                         <Form.Control.Feedback type="invalid">
@@ -212,8 +209,7 @@ const AddSession = ({ id }) => {
                     <Col sm={10}>
                         <Form.Control
                             type="text"
-                            value={duration}
-                            onChange={( event ) => setDuration( event.target.value )}
+                            ref={durationRef}
                             isInvalid={!!durationErr}
                         />
                         <Form.Control.Feedback type="invalid">
@@ -233,8 +229,7 @@ const AddSession = ({ id }) => {
                     <Col sm={10}>
                         <Form.Select
                             aria-label="Select a level"
-                            value={level}
-                            onChange={( event ) => setLevel( event.target.value )}
+                            ref={levelRef}
                             isInvalid={!!levelErr}
                         >
                             <option value="">Open this select menu</option>
@@ -259,9 +254,8 @@ const AddSession = ({ id }) => {
                     <Col sm={10}>
                         <Form.Control
                             as="textarea"
-                            value={abstract}
+                            ref={abstractRef}
                             isInvalid={!!abstractErr}
-                            onChange={( event ) => setAbstract( event.target.value )}
                         />
                         <Form.Control.Feedback type="invalid">
                             {abstractErr}
