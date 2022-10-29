@@ -5,6 +5,7 @@ import Menu from "./Menu";
 import Home from "./pages/Home/Home";
 import WorkshopsList from './pages/WorkshopsList/WorkshopsList';
 import WorkshopDetails from './pages/WorkshopDetails/WorkshopDetails';
+import Feedback from './pages/Feedback/Feedback';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
@@ -29,6 +30,10 @@ function App() {
                     <Route 
                         path="/workshops/:id/*"
                         element={<WorkshopDetails />}
+                    />
+                    <Route 
+                        path="/feedback"
+                        element={<Feedback />}
                     />
                 </Routes>
             </Container>
