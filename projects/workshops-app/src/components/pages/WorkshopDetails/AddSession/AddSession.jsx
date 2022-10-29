@@ -13,6 +13,7 @@ const AddSession = ({ id }) => {
     const [ level, setLevel ] = useState( '' );
     const [ duration, setDuration ] = useState( '' );
     const [ abstract, setAbstract ] = useState( '' );
+    const [ isSubmitted, setIsSubmitted ] = useState( false );
 
     const [ sequenceIdErr, setSequencIdErr ] = useState( '' );
     const [ nameErr, setNameErr ] = useState( '' );
@@ -110,7 +111,9 @@ const AddSession = ({ id }) => {
 
     useEffect(
         () => {
-            validate();
+            if( isSubmitted ) {
+                validate();
+            }
         },
         [ sequenceId, name, speaker, duration, level, abstract ]
     );
@@ -120,6 +123,7 @@ const AddSession = ({ id }) => {
         event.preventDefault();
         
         if( !validate() ) {
+            setIsSubmitted( true );
             return;
         }
 
