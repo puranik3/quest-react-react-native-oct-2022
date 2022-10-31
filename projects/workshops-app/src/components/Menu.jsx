@@ -1,10 +1,16 @@
+import { useContext } from 'react';
 import { Nav, Navbar, Container, Button } from "react-bootstrap";
 import { NavLink } from 'react-router-dom';
+
+import ThemeContext from "../contexts/ThemeContext";
 
 import './Menu.css';
 
 // sfc
-const Menu = ( { theme, toggleTheme } ) => {
+const Menu = () => {
+    // we destructure the value object obtained by calling useContext() into theme and toggleTheme
+    const { theme, toggleTheme } = useContext( ThemeContext );
+
     return (
         <Navbar bg={theme} variant={theme} expand="lg">
             <Container>

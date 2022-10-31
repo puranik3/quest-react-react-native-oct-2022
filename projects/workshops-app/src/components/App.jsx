@@ -7,6 +7,8 @@ import Home from "./pages/Home/Home";
 import WorkshopsList from './pages/WorkshopsList/WorkshopsList';
 import WorkshopDetails from './pages/WorkshopDetails/WorkshopDetails';
 
+import ThemeContext from '../contexts/ThemeContext';
+
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import { useState } from 'react';
@@ -23,12 +25,19 @@ function App() {
 
     const toggleTheme = () => setTheme( theme === 'light' ? 'dark' : 'light' );
 
+    const value = {
+        // theme: theme,
+        // toggleTheme: toggleTheme
+        theme,
+        toggleTheme
+    };
+
     return (
-        <>
+        <ThemeContext.Provider value={value}>
             <ToastContainer
                 autoClose={5000}
             />
-            <Menu theme={theme} toggleTheme={toggleTheme} />
+            <Menu />
             <Container className="my-4">
                 <Routes>
                     <Route 
@@ -53,7 +62,7 @@ function App() {
                     />
                 </Routes>
             </Container>
-        </>
+        </ThemeContext.Provider>
     );
 }
 
