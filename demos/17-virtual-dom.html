@@ -17,7 +17,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
 
         <script type="text/babel">
-            const LoginAndRegister = () => {
+            const RegisterAndLogin = () => {
                 const [ register, setRegister ] = React.useState( true );
 
                 const showLogin = ( event ) => {
@@ -75,7 +75,7 @@
             };
             
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
-            root.render( <LoginAndRegister /> );
+            root.render( <RegisterAndLogin /> );
         </script>
     </body>
 </html>
