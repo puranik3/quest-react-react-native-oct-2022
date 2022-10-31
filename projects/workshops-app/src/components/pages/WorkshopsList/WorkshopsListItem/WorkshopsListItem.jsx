@@ -1,7 +1,10 @@
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../../../../contexts/ThemeContext';
 
-const WorkshopsListItem = ( { workshop, theme } ) => {
+const WorkshopsListItem = ( { workshop } ) => {
+    const { theme } = useTheme();
+    
     return (
         <Card
             bg={theme}
