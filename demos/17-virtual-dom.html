@@ -1,0 +1,81 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
+        <title>Virtual DOM</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
+
+        <script type="text/babel">
+            const LoginAndRegister = () => {
+                const [ register, setRegister ] = React.useState( true );
+
+                const showLogin = ( event ) => {
+                    event.preventDefault();
+                    setRegister( false );
+                }
+
+                return (
+                    <>
+                        {
+                            register ? (
+                                <div className="container card my-4 p-5">
+                                    <h1>Register</h1>
+                                    <hr />
+                                    <form action="/register" onSubmit={showLogin}>
+                                        <div className="form-group">
+                                            <label htmlFor="email">Email</label>
+                                            <input type="email" id="email" />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="password">Password</label>
+                                            <input type="password" id="password" />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="confirm-password">Confirm password</label>
+                                            <input type="password" id="confirm-password" />
+                                        </div>
+                                        <div className="form-group">
+                                            <button type="submit" className="btn btn-primary btn-sm">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            ) : (
+                                <div className="container card my-4 p-5">
+                                    <h1>Login</h1>
+                                    <hr />
+                                    <form action="/login">
+                                        <div className="form-group">
+                                            <label htmlFor="email">Email</label>
+                                            <input type="email" id="email" />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="password">Password</label>
+                                            <input type="password" id="password" />
+                                        </div>
+                                        <div className="form-group">
+                                            <button type="submit" className="btn btn-primary btn-sm">Login</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            )
+                        }
+                    </>
+                );
+            };
+            
+            const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
+            root.render( <LoginAndRegister /> );
+        </script>
+    </body>
+</html>
