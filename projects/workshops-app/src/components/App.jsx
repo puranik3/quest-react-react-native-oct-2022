@@ -42,11 +42,11 @@ function App() {
                 <Routes>
                     <Route 
                         path="/"
-                        element={<Home theme={theme} />}
+                        element={<Home />}
                     />
                     <Route 
                         path="/workshops"
-                        element={<WorkshopsList theme={theme} />}
+                        element={<WorkshopsList />}
                     />
                     <Route 
                         path="/workshops/:id/*"

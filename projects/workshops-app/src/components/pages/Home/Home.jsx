@@ -1,5 +1,8 @@
-// sfc
-const Home = ( { theme } ) => {
+import { useTheme } from '../../../contexts/ThemeContext';
+
+const Home = () => {
+    const { theme } = useTheme();
+
     return (
         <div className={`border border-secondary p-5 bg-${theme} text-${theme === 'dark' ? 'light' : 'dark' }`}>
             <h1>Workshops App</h1>
