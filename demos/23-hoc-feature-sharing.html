@@ -17,30 +17,50 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
 
         <script type="text/babel">
-            class Counter extends React.Component {
-                state = {
-                    value: 0
+            // HOC (Higher-order component) is a function that generates the Container component...
+            const withCounter = ( Component ) => {
+                // we generate a class when the withCounter function is called (dynamically)
+                return class extends React.Component {
+                    // the shared functionality...
+                    state = {
+                        value: 0
+                    };
+
+                    decrement = () => {
+                        this.setState(s => {
+                            return {
+                                value: s.value - 1
+                            };
+                        });
+                    }
+                    
+                    increment = () => {
+                        this.setState(s => {
+                            return {
+                                value: s.value + 1
+                            };
+                        });
+                    }
+
+                    // render the underlying component
+                    render() {
+                        const { value } = this.state;
+                        const { increment, decrement } = this;
+
+                        return (
+                            <Component 
+                                value={value}
+                                increment={increment}
+                                decrement={decrement}
+                            />
+                        );
+                    }
                 };
+            }
 
-                decrement = () => {
-                    this.setState(s => {
-                        return {
-                            value: s.value - 1
-                        };
-                    });
-                }
-                
-                increment = () => {
-                    this.setState(s => {
-                        return {
-                            value: s.value + 1
-                        };
-                    });
-                }
-
+            class Counter extends React.Component {
                 render() {
-                    const { value } = this.state;
-                    const { increment, decrement } = this;
+                    const { value, increment, decrement } = this.props;
 
                     return (
                         <>
@@ -52,30 +72,12 @@
                 }
             };
 
+            // generate a "wrapper class" (called Container component) for the Counter component. The wrapper class has the shared (Counter) functionality.
+            const CounterContainer = withCounter( Counter );
+
             class DataList extends React.Component {
-                state = {
-                    value: 0
-                };
-
-                decrement = () => {
-                    this.setState(s => {
-                        return {
-                            value: s.value - 1
-                        };
-                    });
-                }
-                
-                increment = () => {
-                    this.setState(s => {
-                        return {
-                            value: s.value + 1
-                        };
-                    });
-                }
-
                 render() {
-                    const { value } = this.state;
-                    const { increment, decrement } = this;
+                    const { value, increment, decrement } = this.props;
 
                     return (
                         <div className="p-3 m-3">
@@ -87,18 +89,19 @@
                 }
 
                 componentDidUpdate( oldProps, oldState ) {
-                    if( this.state.value !== oldState.value ) {
+                    if( this.props.value !== oldProps.value ) {
                         console.log( 'Fetch data for the new page' );
                     }
                 }
             };
 
-            
+            const DataListContainer = withCounter( DataList );
+
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
             root.render(
                 <>
-                    <Counter />
-                    <DataList />
+                    <CounterContainer />
+                    <DataListContainer />
                 </>
             );
         </script>
