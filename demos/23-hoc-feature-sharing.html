@@ -17,11 +17,90 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
 
         <script type="text/babel">
-            
+            class Counter extends React.Component {
+                state = {
+                    value: 0
+                };
+
+                decrement = () => {
+                    this.setState(s => {
+                        return {
+                            value: s.value - 1
+                        };
+                    });
+                }
+                
+                increment = () => {
+                    this.setState(s => {
+                        return {
+                            value: s.value + 1
+                        };
+                    });
+                }
+
+                render() {
+                    const { value } = this.state;
+                    const { increment, decrement } = this;
+
+                    return (
+                        <>
+                            <button onClick={decrement}>-</button>
+                            {value}
+                            <button onClick={increment}>+</button>
+                        </>
+                    );
+                }
+            };
+
+            class DataList extends React.Component {
+                state = {
+                    value: 0
+                };
+
+                decrement = () => {
+                    this.setState(s => {
+                        return {
+                            value: s.value - 1
+                        };
+                    });
+                }
+                
+                increment = () => {
+                    this.setState(s => {
+                        return {
+                            value: s.value + 1
+                        };
+                    });
+                }
+
+                render() {
+                    const { value } = this.state;
+                    const { increment, decrement } = this;
+
+                    return (
+                        <div className="p-3 m-3">
+                            <button onClick={decrement} className="btn btn-sm btn-primary me-2">Previous page</button>
+                            You are currently viewing page {value}
+                            <button onClick={increment} className="btn btn-sm btn-primary ms-2">Next page</button>
+                        </div>
+                    )
+                }
+
+                componentDidUpdate( oldProps, oldState ) {
+                    if( this.state.value !== oldState.value ) {
+                        console.log( 'Fetch data for the new page' );
+                    }
+                }
+            };
 
             
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
-            root.render(  );
+            root.render(
+                <>
+                    <Counter />
+                    <DataList />
+                </>
+            );
         </script>
     </body>
 </html>
