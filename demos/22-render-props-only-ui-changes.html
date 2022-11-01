@@ -41,20 +41,36 @@
                 render() {
                     const { value } = this.state;
 
-                    return (
-                        <>
-                            <button onClick={this.decrement}>-</button>
-                            {value}
-                            <button onClick={this.increment}>+</button>
-                        </>
-                    );
+                    // call the "render" prop (a function) -> this returns the UI
+                    return this.props.render({
+                        value,
+                        decrement: this.decrement,
+                        increment: this.increment
+                    });
                 }
             };
-            
+
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
             root.render(
                 <>
-                    <Counter />
+                    <Counter render={( { value, increment, decrement } ) => {
+                        return (
+                            <>
+                                <button onClick={decrement}>-</button>
+                                {value}
+                                <button onClick={increment}>+</button>
+                            </>
+                        );
+                    }} />
+                    <Counter render={( { value, increment, decrement } ) => {
+                        return (
+                            <div className="p-3 m-3">
+                                <button onClick={decrement} className="btn btn-sm btn-primary me-2">-</button>
+                                {value}
+                                <button onClick={increment} className="btn btn-sm btn-primary ms-2">+</button>
+                            </div>
+                        );
+                    }} />
                 </>
             );
         </script>
