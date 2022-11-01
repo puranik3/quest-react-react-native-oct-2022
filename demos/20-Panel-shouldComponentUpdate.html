@@ -36,30 +36,47 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
 
         <script type="text/babel">
+            /** When a Parent component renders / re-renders, the Child components will by default re-render */
             const Panel = ( { question, answer } ) => {
                 const [ show, setShow ] = React.useState( true );
 
-                const toggle = () => setShow( s => !s );
+                // toggle is a function local to Panel function. It gets re-created every time the Panel runs (re-renders). We prevent unnecessary function re-creation by enclosing the toggle function defintion in the React.useCallback() hook.
+                // when the new value of a state depends on the current value of state, we ideally should use the function form of the setter
+                const toggle = React.useCallback( () => setShow( s => !s ), [ setShow ] );
 
                 return (
                     <div className="panel">
-                        <Panel.Question question={question} toggle={toggle} />
+                        <Panel.Question
+                            question={question}
+                            toggle={toggle}
+                        />
                         <Panel.Answer answer={answer} show={show} />
                     </div>
                 );
             };
 
-            Panel.Question = ( { question, toggle } ) => {
-                return (
-                    <div className="panel-question" onClick={toggle}>{question}</div>
-                );
+            Panel.Question = class extends React.Component {
+                render() {
+                    const { question, toggle } = this.props;
+
+                    console.log( 're-rendered question component - although DOM manipulation will still not be done' );
+
+                    return (
+                        <div className="panel-question" onClick={toggle}>{question}</div>
+                    );
+                }
             };
+
+            // a nice name that is shown in Components tab for this component
+            Panel.Question.displayName = 'Panel.Question';
             
             Panel.Answer = ( { answer, show } ) => {
                 return (
                     show && <div className="panel-answer">{answer}</div>
                 );
             };
+
+            Panel.Answer.displayName = 'Panel.Answer';
             
             const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
             root.render(

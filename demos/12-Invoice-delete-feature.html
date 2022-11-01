@@ -38,11 +38,16 @@
                 const deleteItem = ( idx ) => {
                     // Reference: https://www.robinwieruch.de/react-state-array-add-update-remove/
                     // IMPORTANT: When making changes to state (array/object), make sure that a new array/object is created as set as state. This is so that any child component that receives the state as a prop, gets to know of the change and re-renders itself.
-                    const newItems = [ // we use the spread operator to copy the items of an array to a new array
-                        ...curItems
-                    ];
-                    newItems.splice( idx, 1 );
-                    setCurItems( newItems );
+                    
+                    setCurItems( ci => {
+                        const newItems = [ // we use the spread operator to copy the items of an array to a new array
+                            ...ci
+                        ];
+                        
+                        newItems.splice( idx, 1 );
+
+                        return newItems;
+                    });
                 };
 
                 return (
