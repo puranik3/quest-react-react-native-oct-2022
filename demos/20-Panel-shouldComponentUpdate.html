@@ -56,6 +56,14 @@
             };
 
             Panel.Question = class extends React.Component {
+                // called before the props / state are updated
+                // use it to prevent unnecessary re-renders (like "React.memo" for class components)
+                // true -> go ahead and render, false -> don't render
+                shouldComponentUpdate( newProps, newState ) {
+                    // render (i.e. return true) ONLY if any prop has changed
+                    return this.props.question !== newProps.question || this.props.toggle !== newProps.toggle;
+                }
+
                 render() {
                     const { question, toggle } = this.props;
 
