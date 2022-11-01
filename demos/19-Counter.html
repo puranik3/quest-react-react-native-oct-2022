@@ -1,0 +1,63 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
+        <title>Function form of the setter for state</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
+
+        <script type="text/babel">
+            const Counter = ( { initialValue } ) => {
+                console.log( 'rendered' );
+
+                // [ value, setValue ] is returned
+                const [ value, setValue ] = React.useState( initialValue );
+
+                // @todo similarly for decrease, we need to use the functin form of the setter
+                const decrement = () => {
+                    // The setter is asynchronous
+                    setValue( value - 1 );
+                    setValue( value - 1 );
+                };
+
+                // const increment = () => {
+                //     // The setter is asynchronous
+                //     setValue( value + 1 ); // the request to change state is queued up internally
+                //     setValue( value + 1 ); // the request to change state is queued up internally
+                // };
+                
+                const increment = () => {
+                    // The setter is asynchronous. We use the function form of the setter when the new state depends on the current state.
+                    setValue( v => v + 1 ); // the request to change state is queued up internally. The v => v + 1 function is called when React decides to change the state. React will call the v => v + 1 function, by passing in the current state, and updates the state to the returned value.
+                    setValue( v => v + 1 ); // the request to change state is queued up internally. React will call the v => v + 1 function, by passing in the current state, and updates the state to the returned value.
+                };
+
+                return (
+                    <>
+                        <button onClick={decrement}>-</button>
+                        {value}
+                        <button onClick={increment}>+</button>
+                    </>
+                );
+            };
+            
+            const root = ReactDOM.createRoot( document.querySelector( '#root' ) );
+            root.render(
+                <>
+                    <Counter initialValue={100} />
+                    <Counter initialValue={10} />
+                </>
+            );
+        </script>
+    </body>
+</html>
