@@ -37,37 +37,29 @@
                 };
             }
 
+            // a middleware is a function that can intercept an action before it reaches the store
+            const logger = store => next => action => {
+                console.log( 'before state update' );
+                console.log( 'action = ', action );
+                console.log( 'state = ', store.getState() );
+
+                next( action ); // pass on control to the "next in line"
+
+                // control comes back once the store updates the state
+                console.log( 'after state update' );
+                console.log( 'action = ', action );
+                console.log( 'state = ', store.getState() );
+            };
+
             const initialState = {
                 value: 0
             };
 
-            // a middleware is a function that can intercept an action before it reaches the store
-            const logger = ( store ) => {
-                return ( next ) => {
-                    return ( action ) => {
-                        console.log( 'logger called' );
-                        console.log( 'action = ', action );
-                        console.log( 'state = ', store.getState() );
-                        next( action ); // pass on control to the "next in line"
-                    };
-                };
-            };
-
-            // let the reducer set up the initial state for its portion of the state
-            
-            // Reducer should be a "PURE FUNCTION"
-            // Never change state, action (none of the arguments)
-            // Never use any global variables or global function
-            // The output of the reducer simply depends on the arguments passed
             const counterReducer = ( state = initialState, action ) => {
                 switch( action.type ) {
                     case DECREMENT:
-                        // avoid this - NEVER change state
-                        // state.value--;
-                        // return state;
-
                         return {
-                            ...state, // copy existing values in state
+                            ...state,
                             value: state.value - 1
                         };
                     case INCREMENT:
@@ -80,9 +72,7 @@
                 }
             };
 
-            // store is a place to store global state
-            // There is one store for the entire application
-            const store = Redux.createStore( counterReducer/*, initialState */, Redux.applyMiddleware( logger ) );
+            const store = Redux.createStore( counterReducer, Redux.applyMiddleware( logger ) );
 
             // to check the state in the store...
             // store.getState()
