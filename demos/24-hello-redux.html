@@ -20,14 +20,23 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.js"></script>
 
         <script type="text/babel">
-            const initialState = 0;
+            const initialState = {
+                value: 0
+            };
 
-            const counterReducer = ( state, action ) => {
+            // let the reducer set up the initial state for its portion of the state
+            const counterReducer = ( state = initialState, action ) => {
                 switch( action.type ) {
                     case 'DECREMENT':
-                        return state - 1;
+                        return {
+                            ...state, // copy existing values in state
+                            value: state.value - 1
+                        };
                     case 'INCREMENT':
-                        return state + 1;
+                        return {
+                            ...state,
+                            value: state.value + 1
+                        }
                     default:
                         return state;
                 }
@@ -35,13 +44,13 @@
 
             // store is a place to store global state
             // There is one store for the entire application
-            const store = Redux.createStore( counterReducer, initialState );
+            const store = Redux.createStore( counterReducer/*, initialState */ );
 
             // to check the state in the store...
             // store.getState()
 
             const render = () => {
-                document.getElementById( 'counter' ).textContent = store.getState();
+                document.getElementById( 'counter' ).textContent = store.getState().value;
             };
 
             // whenever the state changes, render will be executed
