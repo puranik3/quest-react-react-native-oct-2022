@@ -10,9 +10,10 @@
         <title>Hello Redux</title>
     </head>
     <body>
-        <button onclick="store.dispatch( decrement() )">-</button>
+        <button onclick="store.dispatch( decrement( +document.getElementById( 'delta' ).value ) )">-</button>
         <span id="counter">0</span>
-        <button onclick="store.dispatch( increment() )">+</button>
+        <button onclick="store.dispatch( increment( +document.getElementById( 'delta' ).value ) )">+</button>
+        <input type="number" id="delta" />
 
         <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
@@ -25,15 +26,22 @@
             const INCREMENT = 'INCREMENT';
 
             // action creators
-            const decrement = () => {
+            const decrement = ( value ) => {
                 return {
-                    type: DECREMENT
+                    type: DECREMENT,
+                    payload: {
+                        // value: value
+                        value
+                    }
                 };
             }
             
-            const increment = () => {
+            const increment = ( value ) => {
                 return {
-                    type: INCREMENT
+                    type: INCREMENT,
+                    payload: {
+                        value
+                    }
                 };
             }
 
@@ -56,12 +64,12 @@
 
                         return {
                             ...state, // copy existing values in state
-                            value: state.value - 1
+                            value: state.value - action.payload.value
                         };
                     case INCREMENT:
                         return {
                             ...state,
-                            value: state.value + 1
+                            value: state.value + action.payload.value
                         }
                     default:
                         return state;
