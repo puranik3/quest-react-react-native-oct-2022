@@ -10,9 +10,9 @@
         <title>Hello Redux</title>
     </head>
     <body>
-        <button onclick="store.dispatch( { type: 'DECREMENT' } )">-</button>
+        <button onclick="store.dispatch( decrement() )">-</button>
         <span id="counter">0</span>
-        <button onclick="store.dispatch( { type: 'INCREMENT' } )">+</button>
+        <button onclick="store.dispatch( increment() )">+</button>
 
         <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
@@ -20,6 +20,23 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.js"></script>
 
         <script type="text/babel">
+            // actions types
+            const DECREMENT = 'DECREMENT';
+            const INCREMENT = 'INCREMENT';
+
+            // action creators
+            const decrement = () => {
+                return {
+                    type: DECREMENT
+                };
+            }
+            
+            const increment = () => {
+                return {
+                    type: INCREMENT
+                };
+            }
+
             const initialState = {
                 value: 0
             };
@@ -27,12 +44,12 @@
             // let the reducer set up the initial state for its portion of the state
             const counterReducer = ( state = initialState, action ) => {
                 switch( action.type ) {
-                    case 'DECREMENT':
+                    case DECREMENT:
                         return {
                             ...state, // copy existing values in state
                             value: state.value - 1
                         };
-                    case 'INCREMENT':
+                    case INCREMENT:
                         return {
                             ...state,
                             value: state.value + 1
