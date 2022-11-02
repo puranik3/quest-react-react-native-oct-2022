@@ -1,0 +1,98 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
+        <title>Middleware</title>
+    </head>
+    <body>
+        <button onclick="store.dispatch( decrement() )">-</button>
+        <span id="counter">0</span>
+        <button onclick="store.dispatch( increment() )">+</button>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.js"></script>
+
+        <script type="text/babel">
+            // actions types
+            const DECREMENT = 'DECREMENT';
+            const INCREMENT = 'INCREMENT';
+
+            // action creators
+            const decrement = () => {
+                return {
+                    type: DECREMENT
+                };
+            }
+            
+            const increment = () => {
+                return {
+                    type: INCREMENT
+                };
+            }
+
+            const initialState = {
+                value: 0
+            };
+
+            // a middleware is a function that can intercept an action before it reaches the store
+            const logger = ( store ) => {
+                return ( next ) => {
+                    return ( action ) => {
+                        console.log( 'logger called' );
+                        console.log( 'action = ', action );
+                        console.log( 'state = ', store.getState() );
+                        next( action ); // pass on control to the "next in line"
+                    };
+                };
+            };
+
+            // let the reducer set up the initial state for its portion of the state
+            
+            // Reducer should be a "PURE FUNCTION"
+            // Never change state, action (none of the arguments)
+            // Never use any global variables or global function
+            // The output of the reducer simply depends on the arguments passed
+            const counterReducer = ( state = initialState, action ) => {
+                switch( action.type ) {
+                    case DECREMENT:
+                        // avoid this - NEVER change state
+                        // state.value--;
+                        // return state;
+
+                        return {
+                            ...state, // copy existing values in state
+                            value: state.value - 1
+                        };
+                    case INCREMENT:
+                        return {
+                            ...state,
+                            value: state.value + 1
+                        }
+                    default:
+                        return state;
+                }
+            };
+
+            // store is a place to store global state
+            // There is one store for the entire application
+            const store = Redux.createStore( counterReducer/*, initialState */, Redux.applyMiddleware( logger ) );
+
+            // to check the state in the store...
+            // store.getState()
+
+            const render = () => {
+                document.getElementById( 'counter' ).textContent = store.getState().value;
+            };
+
+            // whenever the state changes, render will be executed
+            store.subscribe( render );
+        </script>
+    </body>
+</html>
