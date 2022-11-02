@@ -1,0 +1,129 @@
+<!-- ! -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
+        <title>Hello Redux</title>
+    </head>
+    <body>
+        <div class="container my-4">
+            <h1>Maintaining separate slices of state and reducers</h1>
+            <hr />
+            <div class="border border-dark p-3 my-2">
+                <button onclick="store.dispatch( decrement() )">-</button>
+                <span id="counter">0</span>
+                <button onclick="store.dispatch( increment() )">+</button>
+            </div>
+
+            <div class="border border-dark p-3 my-2">
+                <input type="text" id="name" placeholder="Enter your name" oninput="store.dispatch( updateName( event.target.value ) )" />
+                <span id="name-display"></span>
+            </div>
+        </div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.19.5/babel.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.js"></script>
+
+        <script type="text/babel">
+            const DECREMENT = 'DECREMENT';
+            const INCREMENT = 'INCREMENT';
+            const UPDATE_NAME = 'UPDATE_NAME';
+
+            const decrement = () => {
+                return {
+                    type: DECREMENT
+                };
+            };
+            
+            const increment = () => {
+                return {
+                    type: INCREMENT
+                };
+            };
+
+            const updateName = ( name ) => {
+                return {
+                    type: UPDATE_NAME,
+                    payload: {
+                        name
+                    }
+                }
+            }
+
+            // one "slice" of the state
+            const initialStateCounter = {
+                value: 0
+            };
+
+            const counterReducer = ( state = initialStateCounter, action ) => {
+                switch( action.type ) {
+                    case DECREMENT:
+                        return {
+                            ...state,
+                            value: state.value - 1
+                        };
+                    case INCREMENT:
+                        return {
+                            ...state,
+                            value: state.value + 1
+                        }
+                    default:
+                        return state;
+                }
+            };
+
+            // another "slice" of the state
+            const initialStateUser = {
+                name: ''
+            };
+
+            const userReducer = ( state = initialStateUser, action ) => {
+                switch( action.type ) {
+                    case UPDATE_NAME:
+                        return {
+                            ...state,
+                            name: action.payload.name
+                        };
+                    default:
+                        return state;
+                }
+            }
+
+            // combining multiple reducers to form a root reducer
+            // we pass combineReducers, the shape of the global state object
+            /*
+                global state -> {
+                    counter: {
+                        value: 0
+                    },
+                    user: {
+                        name: ''
+                    }
+                }
+            */
+            const rootReducer = Redux.combineReducers({
+                counter: counterReducer,
+                user: userReducer
+            });
+
+            const store = Redux.createStore( rootReducer/*, initialState */ );
+
+            const renderCounter = () => {
+                document.getElementById( 'counter' ).textContent = store.getState().counter.value;
+            };
+            
+            const renderUser = () => {
+                document.getElementById( 'name-display' ).textContent = store.getState().user.name;
+            };
+
+            store.subscribe( renderCounter );
+            store.subscribe( renderUser );
+        </script>
+    </body>
+</html>
