@@ -21,11 +21,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.js"></script>
 
         <script type="text/babel">
-            // actions types
             const DECREMENT = 'DECREMENT';
             const INCREMENT = 'INCREMENT';
 
-            // action creators
+            // action with payload
             const decrement = ( value ) => {
                 return {
                     type: DECREMENT,
@@ -49,21 +48,11 @@
                 value: 0
             };
 
-            // let the reducer set up the initial state for its portion of the state
-            
-            // Reducer should be a "PURE FUNCTION"
-            // Never change state, action (none of the arguments)
-            // Never use any global variables or global function
-            // The output of the reducer simply depends on the arguments passed
             const counterReducer = ( state = initialState, action ) => {
                 switch( action.type ) {
                     case DECREMENT:
-                        // avoid this - NEVER change state
-                        // state.value--;
-                        // return state;
-
                         return {
-                            ...state, // copy existing values in state
+                            ...state,
                             value: state.value - action.payload.value
                         };
                     case INCREMENT:
@@ -76,18 +65,12 @@
                 }
             };
 
-            // store is a place to store global state
-            // There is one store for the entire application
-            const store = Redux.createStore( counterReducer/*, initialState */ );
-
-            // to check the state in the store...
-            // store.getState()
+            const store = Redux.createStore( counterReducer );
 
             const render = () => {
                 document.getElementById( 'counter' ).textContent = store.getState().value;
             };
 
-            // whenever the state changes, render will be executed
             store.subscribe( render );
         </script>
     </body>
