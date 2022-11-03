@@ -11,7 +11,7 @@
     </head>
     <body>
         <button onclick="store.dispatch( decrement() )">-</button>
-        <span id="counter">0</span>
+        <span id="counter"></span>
         <button onclick="store.dispatch( increment() )">+</button>
 
         <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -51,9 +51,18 @@
                 console.log( 'state = ', store.getState() );
             };
 
-            const initialState = {
-                value: 0
+            const storeCounter = store => next => action => {
+                next( action );
+
+                localStorage.setItem( 'counter', store.getState().value );
             };
+
+            const initialState = {
+                value: +localStorage.getItem( 'counter' ) || 0
+            };
+
+
+            console.log( initialState );
 
             const counterReducer = ( state = initialState, action ) => {
                 switch( action.type ) {
@@ -72,7 +81,7 @@
                 }
             };
 
-            const store = Redux.createStore( counterReducer, Redux.applyMiddleware( logger ) );
+            const store = Redux.createStore( counterReducer, Redux.applyMiddleware( logger, storeCounter ) );
 
             // to check the state in the store...
             // store.getState()
@@ -80,6 +89,8 @@
             const render = () => {
                 document.getElementById( 'counter' ).textContent = store.getState().value;
             };
+
+            render();
 
             // whenever the state changes, render will be executed
             store.subscribe( render );
