@@ -1,7 +1,8 @@
-import { useTheme } from '../../../contexts/ThemeContext';
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../../reducers/theme';
 
 const Home = () => {
-    const { theme } = useTheme();
+    const theme = useSelector( selectTheme );
 
     return (
         <div className={`border border-secondary p-5 bg-${theme} text-${theme === 'dark' ? 'light' : 'dark' }`}>

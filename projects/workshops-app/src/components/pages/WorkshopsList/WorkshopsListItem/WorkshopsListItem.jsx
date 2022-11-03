@@ -1,9 +1,10 @@
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../../../../contexts/ThemeContext';
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../../../reducers/theme';
 
 const WorkshopsListItem = ( { workshop } ) => {
-    const { theme } = useTheme();
+    const theme = useSelector( selectTheme );
     
     return (
         <Card

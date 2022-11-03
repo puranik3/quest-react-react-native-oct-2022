@@ -16,4 +16,10 @@ const themeReducer = ( state = initialState, { type } ) => {
     }
 };
 
+export const selectTheme = state => state.themeInfo.theme;
+
 export default themeReducer;
+
+// export {
+//     selectTheme
+// }
