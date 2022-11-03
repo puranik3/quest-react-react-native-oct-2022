@@ -24,6 +24,7 @@ const Menu = () => {
                         <Nav.Link to="/feedback" as={NavLink}>Feedback</Nav.Link>
                     </Nav>
                     <Nav>
+                        {/* we are dispatching a "function action" and thunk middleware shall execute the function action */}
                         <Button onClick={() => dispatch( toggleTheme() )} variant="warning">Change theme</Button>
                     </Nav>
                 </Navbar.Collapse>
