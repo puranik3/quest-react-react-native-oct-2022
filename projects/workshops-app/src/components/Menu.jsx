@@ -1,13 +1,16 @@
 import { Nav, Navbar, Container, Button } from "react-bootstrap";
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectTheme } from '../reducers/theme';
+
+import { toggleTheme } from "../actions/creators";
 
 import './Menu.css';
 
 // sfc
 const Menu = () => {
     const theme = useSelector( selectTheme );
+    const dispatch = useDispatch();
 
     return (
         <Navbar bg={theme} variant={theme} expand="lg">
@@ -21,7 +24,7 @@ const Menu = () => {
                         <Nav.Link to="/feedback" as={NavLink}>Feedback</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Button variant="warning">Change theme</Button>
+                        <Button onClick={() => dispatch( toggleTheme() )} variant="warning">Change theme</Button>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
