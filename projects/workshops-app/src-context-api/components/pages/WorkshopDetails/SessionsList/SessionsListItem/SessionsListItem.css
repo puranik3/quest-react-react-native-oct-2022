@@ -1,0 +1,8 @@
+.vote {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.vote:hover {
+    opacity: 1;
+}

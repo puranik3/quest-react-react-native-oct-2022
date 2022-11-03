@@ -61,9 +61,6 @@
                 value: +localStorage.getItem( 'counter' ) || 0
             };
 
-
-            console.log( initialState );
-
             const counterReducer = ( state = initialState, action ) => {
                 switch( action.type ) {
                     case DECREMENT:
