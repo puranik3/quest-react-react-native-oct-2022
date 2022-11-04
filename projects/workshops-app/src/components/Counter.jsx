@@ -2,8 +2,7 @@ import { Component } from 'react';
 
 class Counter extends Component {
     state = {
-        value: this.props.initialValue,
-        x: 100
+        value: this.props.initialValue
     };
 
     decrement = () => {
