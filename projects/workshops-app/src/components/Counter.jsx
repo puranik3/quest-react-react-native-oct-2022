@@ -23,8 +23,8 @@ class Counter extends Component {
         return (
             <>
                 <button onClick={this.decrement}>-</button>
-                {value}
-                <button onClick={this.increment}>+</button>
+                <span id="value">{value}</span>
+                <button onClick={this.increment} id="increment">+</button>
             </>
         );
     }
