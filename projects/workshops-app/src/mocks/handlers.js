@@ -10,6 +10,17 @@ const handlers = [
     })
 ];
 
+
+const errorHandlers = [
+    rest.get( `https://workshops-server.herokuapp.com/workshops`, ( req, res, ctx ) => {
+        return res(
+            ctx.status( 500 ),
+            ctx.json()
+        );
+    })
+];
+
 export {
-    handlers
+    handlers,
+    errorHandlers
 };

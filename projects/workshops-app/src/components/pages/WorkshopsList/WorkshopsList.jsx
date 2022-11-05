@@ -113,7 +113,7 @@ const WorkshopsList = () => {
             }
             {
                 !loading && error && (
-                    <div className="alert alert-danger" role="alert">
+                    <div className="alert alert-danger" role="alert" data-testid="error-message">
                         {error.message}
                         {/*error.response.data*/}
                     </div>
