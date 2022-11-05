@@ -17,4 +17,6 @@ Object.defineProperty(global, 'TextEncoder', {
 // testing-library-specific setup
 // start the mock server before every test file runs
 beforeAll( () => server.listen() );
+// reset handlers after a test if the test overrides the default handlers
+afterEach( () => server.resetHandlers() );
 afterAll( () => server.close() );

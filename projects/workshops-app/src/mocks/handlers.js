@@ -3,10 +3,27 @@ import workshops from './data/workshops';
 
 const handlers = [
     rest.get( `https://workshops-server.herokuapp.com/workshops`, ( req, res, ctx ) => {
-        return res(
-            ctx.status( 200 ),
-            ctx.json( workshops.slice( 0, 10 ) )
-        );
+
+        const _page = req.url.searchParams.get( '_page' );
+        
+        if( _page === '1' ) {
+            return res(
+                ctx.status( 200 ),
+                ctx.json( workshops.slice( 0, 10 ) )
+            );
+        }
+
+        if( _page === '2' ) {
+            return res(
+                ctx.status( 200 ),
+                ctx.json( workshops.slice( 10, 20 ) )
+            );
+        } else {
+            return res(
+                ctx.status( 200 ),
+                ctx.json( workshops )
+            );
+        }
     })
 ];
 

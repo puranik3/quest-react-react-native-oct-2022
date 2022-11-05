@@ -4,6 +4,7 @@ import { AllProviders } from "../../../test-utils/utils";
 import workshops from '../../../mocks/data/workshops';
 import server from '../../../mocks/server';
 import { errorHandlers } from '../../../mocks/handlers';
+import userEvent from '@testing-library/user-event'
 
 describe( 'WorkshopsList', () => {
     describe( 'on load', () => {
@@ -45,4 +46,26 @@ describe( 'WorkshopsList', () => {
             expect( errorMessage ).toBeInTheDocument();
         });
     });
+
+    describe( 'pagination', () => {
+        test( 'shows the next page of workshops when the Next button is clicked', async () => {
+            render(
+                <AllProviders>
+                    <WorkshopsList />
+                </AllProviders>
+            );
+
+            const nextButton = await screen.findByRole( 'button', { name: 'Next page' } );
+            userEvent.click( nextButton );
+
+            for( let i = 10; i < 12; i++ ) {
+                const workshopItemTitle = await screen.findByText( workshops[i].name );
+                expect( workshopItemTitle ).toBeInTheDocument();
+            }
+        });
+
+        test( 'shows the previous page of workshops when the Next button is clicked', async () => {
+
+        });
+    })
 });
