@@ -1,5 +1,5 @@
 import WorkshopsList from "./WorkshopsList";
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { AllProviders } from "../../../test-utils/utils";
 import workshops from '../../../mocks/data/workshops';
 import server from '../../../mocks/server';
@@ -64,8 +64,50 @@ describe( 'WorkshopsList', () => {
             }
         });
 
-        test( 'shows the previous page of workshops when the Next button is clicked', async () => {
+        test( 'shows the previous page of workshops when the Previous button is clicked', async () => {
+            render(
+                <AllProviders>
+                    <WorkshopsList />
+                </AllProviders>
+            );
 
+            const nextButton = await screen.findByRole( 'button', { name: 'Next page' } );
+            userEvent.click( nextButton );
+
+            const loadingMessage = await screen.findByText( 'Loading...' );
+
+            await waitForElementToBeRemoved( loadingMessage );
+
+            const previousButton = await screen.findByRole( 'button', { name: 'Previous page' } );
+            userEvent.click( previousButton );
+
+            for( let i = 0; i < 10; i++ ) {
+                const workshopItemTitle = await screen.findByText( workshops[i].name );
+                expect( workshopItemTitle ).toBeInTheDocument();
+            }
         });
+
+        // test( 'shows the previous page of workshops when the Previous button is clicked', async () => {
+        //     render(
+        //         <AllProviders>
+        //             <WorkshopsList />
+        //         </AllProviders>
+        //     );
+
+        //     const nextButton = await screen.findByRole( 'button', { name: 'Next page' } );
+        //     userEvent.click( nextButton );
+
+        //     for( let i = 10; i < 12; i++ ) {
+        //         await screen.findByText( workshops[i].name );
+        //     }
+
+        //     const previousButton = await screen.findByRole( 'button', { name: 'Previous page' } );
+        //     userEvent.click( previousButton );
+
+        //     for( let i = 0; i < 10; i++ ) {
+        //         const workshopItemTitle = await screen.findByText( workshops[i].name );
+        //         expect( workshopItemTitle ).toBeInTheDocument();
+        //     }
+        // });
     })
 });

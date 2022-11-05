@@ -34,6 +34,8 @@ const WorkshopsList = () => {
     useEffect(
         () => { // side-effect
             const helper = async () => {
+                setLoading( true );
+
                 try {
                     const data = await getWorkshops( page );
                     setWorkshops( data );
@@ -87,7 +89,7 @@ const WorkshopsList = () => {
                             onClick={previousPage}
                             disabled={page <= 1}
                         >
-                            Previous
+                            Previous page
                         </button>
                         <button
                             className="btn btn-primary btn-sm my-3"
