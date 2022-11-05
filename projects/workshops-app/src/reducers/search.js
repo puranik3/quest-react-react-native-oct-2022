@@ -8,7 +8,8 @@ const initialState = {
     items: []
 };
 
-const searchReducer = ( state = initialState, { type, payload: { items } } ) => {
+// When Redux initializes the store it passes an action called 'redux/@@INIT' whose action will not have payload. So we make sure payload is set to empty object by default ({}), so that destructuring it to get items does not result in an error.
+const searchReducer = ( state = initialState, { type, payload: { items } = {} } ) => {
     switch( type ) {
         case FETCH_ITEMS:
             return {

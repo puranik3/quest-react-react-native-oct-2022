@@ -1,13 +1,27 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../../../reducers/theme';
 
 const Home = () => {
     const theme = useSelector( selectTheme );
+    const [ searchKey, setSearchKey ] = useState( '' );
+
+    const fetchSearchItems = ( event ) => {
+        setSearchKey( event.target.value );
+    };
 
     return (
         <div className={`border border-secondary p-5 bg-${theme} text-${theme === 'dark' ? 'light' : 'dark' }`}>
             <h1>Workshops App</h1>
             <hr />
+
+            <input
+                type="search"
+                value={searchKey}
+                onChange={fetchSearchItems}
+            />
+            
+            You typed: {searchKey}
 
             <p>
                 The Workshops application serves details of (fictitious) technical workshops happening in various cities. Every workshop has a broad topic (eg. JavaScript), and a workshop has many sessions (each session covers a sub-topic, eg. Closures in JavaScript).
