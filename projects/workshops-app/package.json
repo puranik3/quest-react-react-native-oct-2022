@@ -55,6 +55,11 @@
     ]
   },
   "jest": {
-    "transformIgnorePatterns": ["node_modules\/(?!axios)"]
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)"
+    ]
+  },
+  "devDependencies": {
+    "msw": "^0.47.4"
   }
 }
