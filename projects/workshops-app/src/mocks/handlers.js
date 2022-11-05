@@ -5,7 +5,7 @@ const handlers = [
     rest.get( `https://workshops-server.herokuapp.com/workshops`, ( req, res, ctx ) => {
         return res(
             ctx.status( 200 ),
-            ctx.json( workshops )
+            ctx.json( workshops.slice( 0, 10 ) )
         );
     })
 ];

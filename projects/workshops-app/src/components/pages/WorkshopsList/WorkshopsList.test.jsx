@@ -1,9 +1,8 @@
 import WorkshopsList from "./WorkshopsList";
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { AllProviders } from "../../../test-utils/utils";
 import workshops from '../../../mocks/data/workshops';
-import store from '../../../store';
+
 
 describe( 'WorkshopsList', () => {
     describe( 'on load', () => {
@@ -16,16 +15,20 @@ describe( 'WorkshopsList', () => {
 
         test( 'should fetch and show the workshops', async () => {
             render(
-                <Provider store={store}>
-                    <BrowserRouter>
-                        <WorkshopsList />
-                    </BrowserRouter>
-                </Provider>
+                <AllProviders>
+                    <WorkshopsList />
+                </AllProviders>
             );
 
             for( let i = 0; i < 10; i++ ) {
+                // we use find*() methods when we expect to element to appear after a delay (asynchronous)
                 const workshopItemTitle = await screen.findByText( workshops[i].name );
+                expect( workshopItemTitle ).toBeInTheDocument();
             }
+
+            // we use query*() methods when we expect an element NOT to be present (get*() methods will fail in such case)
+            const loadingMessage = screen.queryByText( 'Loading...' );
+            expect( loadingMessage ).not.toBeInTheDocument();
         });
     });
 });
