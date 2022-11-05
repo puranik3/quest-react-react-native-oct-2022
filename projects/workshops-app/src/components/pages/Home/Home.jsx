@@ -15,6 +15,8 @@ const Home = () => {
     const fetchSearchItems = ( event ) => {
         setSearchKey( event.target.value );
 
+        // ideally we would like to debounce this dispatch
+        // https://www.freecodecamp.org/news/javascript-debounce-example/
         // the action returned by this is a function - so thunk middleware will execute this function
         dispatch( fetchItemsThunk( event.target.value ) );
     };
