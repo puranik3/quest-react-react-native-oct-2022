@@ -3,6 +3,7 @@ import {
     FETCH_ITEMS,
     FETCHED_ITEMS
 } from "./constants";
+import { search } from '../services/items';
 
 // const toggleTheme = () => {
 //     return {
@@ -25,6 +26,17 @@ const fetchedItems = ( items ) => {
     };
 };
 
+const fetchItemsThunk = ( key ) => {
+    return async ( dispatch, getState ) => {
+        // dispatch the real action...
+        dispatch( fetchItems() );
+
+        // ...followed by executing the side-effect (fetch the search suggestions (items) from the backend, and storing the search suggestions in the store)
+        const items = await search( key );
+        dispatch( fetchedItems( items ) );
+    }
+};
+
 // Because we are using thunk middleware, "actions can be functions" (instead of objects with type property)
 const toggleTheme = () => {
     return ( dispatch, getState ) => {
@@ -41,5 +53,6 @@ const toggleTheme = () => {
 export {
     toggleTheme,
     fetchItems,
-    fetchedItems
+    fetchedItems,
+    fetchItemsThunk
 };

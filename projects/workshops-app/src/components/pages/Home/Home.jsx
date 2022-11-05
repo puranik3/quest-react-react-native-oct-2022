@@ -1,13 +1,20 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectTheme } from '../../../reducers/theme';
+import {
+    fetchItemsThunk
+} from '../../../actions/creators';
 
 const Home = () => {
+    const dispatch = useDispatch();
     const theme = useSelector( selectTheme );
     const [ searchKey, setSearchKey ] = useState( '' );
 
     const fetchSearchItems = ( event ) => {
         setSearchKey( event.target.value );
+
+        // the action returned by this is a function
+        dispatch( fetchItemsThunk( event.target.value ) );
     };
 
     return (
