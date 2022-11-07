@@ -11,9 +11,12 @@ import { search } from '../services/items';
 //     };
 // };
 
-const fetchItems = () => {
+const fetchItems = ( key ) => {
     return {
-        type: FETCH_ITEMS
+        type: FETCH_ITEMS,
+        payload: {
+            key
+        }
     };
 };
 
@@ -29,7 +32,7 @@ const fetchedItems = ( items ) => {
 const fetchItemsThunk = ( key ) => {
     return async ( dispatch, getState ) => {
         // dispatch the real action...
-        dispatch( fetchItems() );
+        dispatch( fetchItems( key ) );
 
         // ...followed by executing the side-effect (fetch the search suggestions (items) from the backend, and storing the search suggestions in the store)
         const items = await search( key );

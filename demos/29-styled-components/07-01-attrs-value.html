@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.13.1/umd/react.development.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.13.1/umd/react-dom.development.js"></script>
+        
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+        
+        <script src="https://unpkg.com/react-is@17.0.1/umd/react-is.production.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/styled-components/5.2.1/styled-components.min.js"></script>
+
+        <script type="text/babel">
+            const Input = styled.input.attrs({
+                type: "text"
+            })`
+                color: palevioletred;
+                font-size: 1em;
+                border: 2px solid palevioletred;
+                border-radius: 3px;
+
+                /* here we use the dynamically computed prop */
+                margin: ${props => props.size};
+                padding: ${props => props.size};
+            `;
+            
+            ReactDOM.render(
+                <div>
+                    <Input placeholder="A small text input" />
+                    <br />
+                    <Input placeholder="A bigger text input" size="2em" />
+                </div>,
+                document.getElementById( 'root' )
+            );
+        </script>
+    </body>
+</html>

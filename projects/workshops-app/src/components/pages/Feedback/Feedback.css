@@ -1,0 +1,13 @@
+.form-group {
+    display: flex;
+    margin: 1em 0;
+}
+
+.form-group label {
+    flex-basis: 25%;
+}
+
+.form-group input {
+    flex-basis: 75%;
+    padding: 0.5em;
+}

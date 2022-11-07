@@ -19,7 +19,7 @@ const Feedback = lazy( () => import( './pages/Feedback/Feedback' ) );
 
 function App() {
     return (
-        <>
+        <Suspense>
             <ToastContainer
                 autoClose={5000}
             />
@@ -48,7 +48,7 @@ function App() {
                     />
                 </Routes>
             </Container>
-        </>
+        </Suspense>
     );
 }
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.1/umd/react.development.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.1/umd/react-dom.development.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-virtualized/9.22.2/react-virtualized.js"></script>
+
+        <script type="text/babel">
+            const { List } = ReactVirtualized;
+
+            // List data as an array of strings
+            const list = [];
+
+            for( let i = 0; i < 1000; i++ ) {
+                list.push( 'Item ' + ( i + 1 ) );
+            }
+
+            const style = {
+                border: '1px solid black',
+                padding: '20px'
+            }
+
+            function rowRenderer({
+                key, // Unique key within array of rows
+                index, // Index of row within collection
+                isScrolling, // The List is currently being scrolled
+                isVisible, // This row is visible within the List (eg it is not an overscanned row)
+                style, // Style object to be applied to row (to position it)
+            }) {
+                return (
+                    <li key={key} style={style} className="list-group-item">
+                        {list[index]}
+                    </li>
+                );
+            }
+
+            // Render your list
+            ReactDOM.render(
+                <div>
+                    <List
+                        width={300}
+                        height={300}
+                        rowCount={list.length}
+                        rowHeight={50}
+                        rowRenderer={rowRenderer}
+                    />
+                </div>,
+                document.getElementById( 'root' ),
+            );
+        </script>
+    </body>
+</html>

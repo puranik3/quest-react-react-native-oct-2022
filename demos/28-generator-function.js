@@ -15,9 +15,9 @@ function *getCounter() {
 
     yield 103;
 
-    yield get();
+    yield* get();
 
-    return;
+    return 106;
 }
 
 // we get an iterator (we are NOT executing the function yet)
@@ -34,5 +34,9 @@ result = iter.next();
 console.log( result ); // { value: 102, done: false }
 result = iter.next();
 console.log( result ); // { value: 103, done: false }
+result = iter.next();
+console.log( result ); // { value: undefined, done: true }
+result = iter.next();
+console.log( result ); // { value: undefined, done: true }
 result = iter.next();
 console.log( result ); // { value: undefined, done: true }
