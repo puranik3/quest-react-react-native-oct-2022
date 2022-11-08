@@ -1,6 +1,9 @@
 # React, React Native Training
 - Oct 2022 (7 - 9 AM on weekdays, 9 am - 1 pm on Saturday)
 
+## Issues
+- Unable to reach Expo servers. Falling back to using the cached dependency map (bundledNativeModules.json) from the package "expo" installed in your project. FetchError: request to https://api.expo.dev/v2/versions/latest failed, reason: unable to get local issuer certificate
+
 ## References
 - [Server](https://workshops-server.herokuapp.com/)
 - [Completed app](https://vw-angular.s3.ap-south-1.amazonaws.com/index.html)
