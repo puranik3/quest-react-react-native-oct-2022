@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
-        flexDirection: 'row',
+        flexDirection: 'row', // we want to arrange children horizontally
         alignItems: 'stretch'
     },
     boxRed: {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'green'
     },
     vbox: {
-        flex: 1
+        flex: 1 // equal height for all vbox elements
     },
     odd: {
         backgroundColor: 'lightgray'
