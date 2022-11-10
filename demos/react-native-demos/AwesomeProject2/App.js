@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import FlexBoxLayout from './components/04-FlexBoxLayout';
+import FlexBoxLayout from './components/06-FlexBoxLayout';
 
 export default function App() {
   return (
