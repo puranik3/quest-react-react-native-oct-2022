@@ -9,7 +9,11 @@ const FlexBoxLayout = () => {
             <View style={[ styles.boxGreen ]}>
                 <View style={[ styles.vbox, styles.odd ]}></View>
                 <View style={[ styles.vbox, styles.even ]}></View>
-                <View style={[ styles.vbox, styles.odd ]}></View>
+                <View style={[ styles.vbox, styles.odd, styles.third ]}>
+                    <View style={[ styles.hbox1 ]}></View>
+                    <View style={[ styles.hbox2 ]}></View>
+                    <View style={[ styles.hbox3 ]}></View>
+                </View>
                 <View style={[ styles.vbox, styles.even ]}></View>
             </View>
         </View>
@@ -25,7 +29,8 @@ const styles = StyleSheet.create({
     },
     boxRed: {
         flex: 1,
-        backgroundColor: 'red'
+        backgroundColor: 'red',
+        margin: 10
     },
     boxGreen: {
         flex: 2,
@@ -33,13 +38,29 @@ const styles = StyleSheet.create({
         backgroundColor: 'green'
     },
     vbox: {
-        flex: 1 // equal height for all vbox elements
+        flex: 1, // equal height for all vbox elements
+        margin: 10
     },
     odd: {
         backgroundColor: 'lightgray'
     },
     even: {
         backgroundColor: 'darkgray'
+    },
+    third: {
+        flexDirection: 'row',
+        alignItems: 'stretch'
+    },
+    hbox1: {
+        flex: 1,
+        backgroundColor: 'blue'
+    },
+    hbox2: {
+        flex: 2
+    },
+    hbox3: {
+        flex: 1,
+        backgroundColor: 'blue'
     }
 });
  
