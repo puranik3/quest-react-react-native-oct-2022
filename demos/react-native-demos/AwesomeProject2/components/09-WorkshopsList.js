@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
 import MySafeAreaView from './MySafeAreaView';
 
 import { getWorkshops } from '../services/workshops';
@@ -50,6 +50,23 @@ const WorkshopsList = () => {
                         </View>
                     )
                 }
+                {
+                    loading === false && !error && (
+                        <ScrollView style={[ styles.workshopsList ]}>
+                            {
+                                workshops.map(
+                                    workshop => (
+                                        <View style={[ styles.workshopsListItem ]}>
+                                            <Text style={[ styles.workshopName ]}>
+                                                {workshop.name}
+                                            </Text>
+                                        </View>
+                                    )
+                                )
+                            }
+                        </ScrollView>
+                    )
+                }
             </View>
         </MySafeAreaView>
     );
@@ -82,6 +99,17 @@ const styles = StyleSheet.create({
     errorMessageText: {
         fontSize: 20,
         color: 'white'
+    },
+    workshopsList: {
+        flex: 1
+    },
+    workshopsListItem: {
+        padding: 10,
+        marginVertical: 2,
+        backgroundColor: 'lightgray'
+    },
+    workshopName: {
+        fontSize: 16
     }
 });
 

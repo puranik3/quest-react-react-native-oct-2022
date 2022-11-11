@@ -10,7 +10,7 @@ const getWorkshops = async ( page ) => {
             }
         }
     }
-    const response = await axios.get( `https://workshops-server.herokuapp.com/workshop`, options );
+    const response = await axios.get( `https://workshops-server.herokuapp.com/workshops`, options );
 
     return response.data;
 };
