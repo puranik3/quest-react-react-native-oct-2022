@@ -19,6 +19,7 @@ const QuestionsList = () => {
     const [ loading, setLoading ] = useState( true );
     const [ questions, setQuestions ] = useState( [] );
     const [ error, setError ] = useState( null );
+    const [ refreshing, setRefreshing ] = useState( false );
 
     useEffect(
         () => {
@@ -30,12 +31,15 @@ const QuestionsList = () => {
                     setError( error );
                 } finally {
                     setLoading( false );
+                    setRefreshing( false );
                 }
             }
 
-            helper();
+            if( loading || refreshing ) { // when refreshing changes from false to true
+                helper();
+            }
         },
-        []
+        [ refreshing ]
     );
 
     return (
@@ -66,6 +70,8 @@ const QuestionsList = () => {
                             data={questions}
                             renderItem={renderQuestion}
                             keyExtractor={question => question.question_id}
+                            refreshing={refreshing}
+                            onRefresh={() => setRefreshing( true )}
                         />
                     )
                 }
