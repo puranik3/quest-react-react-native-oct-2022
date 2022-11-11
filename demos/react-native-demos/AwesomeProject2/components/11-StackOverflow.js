@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
 import MySafeAreaView from './MySafeAreaView';
 
-import { getWorkshops } from '../services/workshops';
+import { getQuestions } from '../services/stackoverflow';
 
 // Pull out item which is passed to the item renderer, but call the variable workshop
-const renderWorkshopItem = ( { item : workshop } ) => {
+const renderQuestion = ( { item : workshop } ) => {
     return (
         <View style={[ styles.workshopsListItem ]}>
             <Text style={[ styles.workshopName ]}>
