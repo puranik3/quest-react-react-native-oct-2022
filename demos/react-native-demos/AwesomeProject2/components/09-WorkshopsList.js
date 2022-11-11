@@ -14,7 +14,7 @@ const WorkshopsList = () => {
         () => {
             const helper = async () => {
                 try {
-                    const data = await getWorkshops( page );
+                    const data = await getWorkshops();
                     setWorkshops( data );
                 } catch( error ) {
                     setError( error );
@@ -33,13 +33,20 @@ const WorkshopsList = () => {
             <View style={[ styles.container ]}>
                 <Text style={[ styles.heading ]}>List of workshops</Text>
                 {
-                    loading === true || loading === false && (
+                    loading === true && (
                         <View style={[ styles.aiWrapper ]}>
                             <ActivityIndicator
                                 size="large"
                                 color="#0000ff"
                                 style={[ styles.ai ]}
                             />
+                        </View>
+                    )
+                }
+                {
+                    loading === false && error && (
+                        <View style={[ styles.errorMessage ]}>
+                            <Text style={[ styles.errorMessageText ]}>{error.message}</Text>
                         </View>
                     )
                 }
@@ -51,7 +58,8 @@ const WorkshopsList = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'stretch'
+        alignItems: 'stretch',
+        padding: 10
     },
     heading: {
         paddingVertical: 16,
@@ -64,6 +72,16 @@ const styles = StyleSheet.create({
     },
     ai: {
         width: 30
+    },
+    errorMessage: {
+        padding: 20,
+        borderRadius: 5,
+        textAlign: 'center',
+        backgroundColor: 'crimson'
+    },
+    errorMessageText: {
+        fontSize: 20,
+        color: 'white'
     }
 });
 
