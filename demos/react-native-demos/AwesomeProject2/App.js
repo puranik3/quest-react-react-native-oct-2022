@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import WorkshpsList from './components/09-WorkshopsList';
+import { StyleSheet, View } from 'react-native';
+import WorkshopsList from './components/10-WorkshopsList';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <WorkshpsList />
+      <WorkshopsList />
     </View>
   );
 }

@@ -1,8 +1,19 @@
 import { useState, useEffect } from 'react';
-import { View, Text, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
 import MySafeAreaView from './MySafeAreaView';
 
 import { getWorkshops } from '../services/workshops';
+
+// Pull out item which is passed to the item renderer, but call the variable workshop
+const renderWorkshopItem = ( { item : workshop } ) => {
+    return (
+        <View style={[ styles.workshopsListItem ]} key={workshop.id}>
+            <Text style={[ styles.workshopName ]}>
+                {workshop.name}
+            </Text>
+        </View>
+    );
+};
 
 // We can use either fetch() API or a third-party library like axios to fetch data
 const WorkshopsList = () => {
@@ -52,19 +63,10 @@ const WorkshopsList = () => {
                 }
                 {
                     loading === false && !error && (
-                        <ScrollView style={[ styles.workshopsList ]}>
-                            {
-                                workshops.map(
-                                    workshop => (
-                                        <View style={[ styles.workshopsListItem ]} key={workshop.id}>
-                                            <Text style={[ styles.workshopName ]}>
-                                                {workshop.name}
-                                            </Text>
-                                        </View>
-                                    )
-                                )
-                            }
-                        </ScrollView>
+                        <FlatList
+                            data={workshops}
+                            renderItem={renderWorkshopItem}
+                        />
                     )
                 }
             </View>
@@ -99,9 +101,6 @@ const styles = StyleSheet.create({
     errorMessageText: {
         fontSize: 20,
         color: 'white'
-    },
-    workshopsList: {
-        flex: 1
     },
     workshopsListItem: {
         padding: 10,
