@@ -4,29 +4,28 @@ import MySafeAreaView from './MySafeAreaView';
 
 import { getQuestions } from '../services/stackoverflow';
 
-// Pull out item which is passed to the item renderer, but call the variable workshop
-const renderQuestion = ( { item : workshop } ) => {
+// Pull out item which is passed to the item renderer, but call the variable question
+const renderQuestion = ( { item : question } ) => {
     return (
-        <View style={[ styles.workshopsListItem ]}>
-            <Text style={[ styles.workshopName ]}>
-                {workshop.name}
+        <View style={[ styles.question ]}>
+            <Text style={[ styles.questionTitle ]}>
+                {question.title}
             </Text>
         </View>
     );
 };
 
-// We can use either fetch() API or a third-party library like axios to fetch data
-const WorkshopsList = () => {
+const QuestionsList = () => {
     const [ loading, setLoading ] = useState( true );
-    const [ workshops, setWorkshops ] = useState( [] );
+    const [ questions, setQuestions ] = useState( [] );
     const [ error, setError ] = useState( null );
 
     useEffect(
         () => {
             const helper = async () => {
                 try {
-                    const data = await getWorkshops();
-                    setWorkshops( data );
+                    const data = await getQuestions();
+                    setQuestions( data );
                 } catch( error ) {
                     setError( error );
                 } finally {
@@ -42,7 +41,7 @@ const WorkshopsList = () => {
     return (
         <MySafeAreaView>
             <View style={[ styles.container ]}>
-                <Text style={[ styles.heading ]}>List of workshops</Text>
+                <Text style={[ styles.heading ]}>Latest questions</Text>
                 {
                     loading === true && (
                         <View style={[ styles.aiWrapper ]}>
@@ -64,9 +63,9 @@ const WorkshopsList = () => {
                 {
                     loading === false && !error && (
                         <FlatList
-                            data={workshops}
-                            renderItem={renderWorkshopItem}
-                            keyExtractor={workshop => workshop.id}
+                            data={questions}
+                            renderItem={renderQuestion}
+                            keyExtractor={question => question.question_id}
                         />
                     )
                 }
@@ -103,14 +102,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'white'
     },
-    workshopsListItem: {
+    question: {
         padding: 10,
         marginVertical: 2,
         backgroundColor: 'lightgray'
     },
-    workshopName: {
+    questionTitle: {
         fontSize: 16
     }
 });
 
-export default WorkshopsList;
+export default QuestionsList;
