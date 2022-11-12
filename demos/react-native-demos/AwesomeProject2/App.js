@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import MyAlert from './components/14-Alert';
+import MyModal from './components/15-MyModal';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <MyAlert />
+      <MyModal />
     </View>
   );
 }
