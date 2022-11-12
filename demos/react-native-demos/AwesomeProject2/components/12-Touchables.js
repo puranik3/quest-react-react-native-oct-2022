@@ -4,7 +4,7 @@ import {
     Text,
     TouchableOpacity,
     TouchableHighlight,
-    TouchableNativeFeedback,
+    TouchableNativeFeedback, // Android only
     TouchableWithoutFeedback,
     StyleSheet
 } from 'react-native';
@@ -43,7 +43,7 @@ const Touchables = () => {
                 }}
                 background={TouchableNativeFeedback.Ripple(rippleColor, rippleOverflow)}
             >
-            <View style={[ styles.touchable ]}>
+                <View style={[ styles.touchable ]}>
                     <Text>Touchable without feedback</Text>
                 </View>
             </TouchableNativeFeedback>

@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import Touchables from './components/12-Touchables';
+import Animations from './components/13-Animations';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Touchables />
+      <Animations />
     </View>
   );
 }
