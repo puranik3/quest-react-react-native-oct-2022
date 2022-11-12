@@ -2,7 +2,10 @@
 - Oct 2022 (7 - 9 AM on weekdays, 9 am - 1 pm on Saturday)
 
 ## Issues
-- Unable to reach Expo servers. Falling back to using the cached dependency map (bundledNativeModules.json) from the package "expo" installed in your project. FetchError: request to https://api.expo.dev/v2/versions/latest failed, reason: unable to get local issuer certificate
+- When working with Expo, you do not gte access to ```ios``` and ```1android``` folders. You need to eject using react-native CLI to get these. Alternatively, run this to get the folders
+```
+expo run:ios
+````
 
 ## References
 - [Server](https://workshops-server.herokuapp.com/)
