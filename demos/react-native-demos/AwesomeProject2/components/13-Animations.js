@@ -1,15 +1,44 @@
-import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import { TouchableOpacity, Text, StyleSheet, Animated, Easing } from "react-native";
 
 const Animations = () => {
+    // animated width and height
+    const aw = new Animated.Value( 200 );
+    const ah = new Animated.Value( 100 );
+
     const animate = () => {
-        alert( 'animation will be done' );
+        Animated.sequence([
+            Animated.timing( aw, {
+                toValue: 220,
+                duration: 200,
+                easing: Easing.elastic(2)
+            }),
+            Animated.timing( aw, {
+                toValue: 200,
+                duration: 200,
+                easing: Easing.elastic(2)
+            })
+        ]).start();
+        Animated.sequence([
+            Animated.timing( ah, {
+                toValue: 110,
+                duration: 200,
+                easing: Easing.elastic(2)
+            }),
+            Animated.timing( ah, {
+                toValue: 100,
+                duration: 200,
+                easing: Easing.elastic(2)
+            })
+        ]).start();
     };
 
     return (
         <TouchableOpacity onPress={animate} style={[ styles.touchable ]}>
-            <View style={[ styles.box ]}>
-                <Text style={[ styles.text ]}>Animated view</Text>
-            </View>
+            <Animated.View style={[ { ...styles.box, width: aw, height: ah } ]}>
+                <Text style={[ styles.text ]}>
+                    Animated view
+                </Text>
+            </Animated.View>
         </TouchableOpacity>
     );
 };
@@ -29,6 +58,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'white',
+        fontSize: 20
     }
 });
  
