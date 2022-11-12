@@ -1,15 +1,39 @@
+import { useState } from 'react';
 import { Alert, View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 
 const MyAlert = () => {
-    const showAlert = () => {
+    const [ message, setMessage ] = useState( '' );
 
+    const showAlert = () => {
+        Alert.alert(
+            'Confirm',
+            'Are you sure you want to delete this item?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress() {
+                        setMessage( 'Item has been deleted' );
+                    }
+                },
+                {
+                    text: 'OK',
+                    onPress() {
+                        setMessage( 'Nothing to worry, the item is not deleted' );
+                    }
+                }
+            ]
+        )
     };
 
     return (
         <View style={[ styles.container ]}>
-            <TouchableHighlight onPress={showAlert} underlayColor="lightgray" style={[ styles.touchable ]}>
-                <Text style={styles.text}>Show alert</Text>
+            <TouchableHighlight
+                onPress={showAlert}
+                underlayColor="lightgray"
+                style={[ styles.touchable ]}>
+                    <Text style={styles.text}>Show alert</Text>
             </TouchableHighlight>
+            <Text style={[ styles.text ]}>{message}</Text>
         </View>
     );
 };
