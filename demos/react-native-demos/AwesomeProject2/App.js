@@ -1,12 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import MyModal from './components/15-MyModal';
+import { StyleSheet, View, Text } from 'react-native';
+
+// no need to specify the .platform extension - it is picked up based on the underlying platform
+import AsyncStorageDemo from './components/19-AsyncStorage';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <MyModal />
+      {/* <AppButton>
+        <Text>Platform-specific styled button</Text>
+      </AppButton> */}
+      <AsyncStorageDemo />
     </View>
   );
 }

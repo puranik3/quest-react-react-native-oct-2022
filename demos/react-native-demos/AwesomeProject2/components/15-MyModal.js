@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     close: {
+        /* place this with respect to its parent view */
         position: 'absolute',
         top: 10,
         right: 10
