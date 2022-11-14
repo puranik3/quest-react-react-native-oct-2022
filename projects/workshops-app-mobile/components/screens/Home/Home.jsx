@@ -6,7 +6,7 @@ const Home = ( { route, navigation } ) => {
         <View style={Utils.fullHeight}>
             <ImageBackground source={require( '../../../assets/empty-classroom.jpeg' )} style={styles.bg}>
                 <Text style={[ BannerStyles.text, styles.text ]}>
-                    Welcome to workshops app. Yoou can find details of tech workshops happening nearby.
+                    Welcome to workshops app. You can find details of tech workshops happening nearby.
                 </Text>
                 <TouchableHighlight
                     underlayColor="rgba( 220, 220, 220, 1 )"
