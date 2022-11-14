@@ -1,15 +1,32 @@
 import { useState, useEffect } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, Image, FlatList, ActivityIndicator, TouchableHighlight, StyleSheet } from 'react-native';
 import { getWorkshops } from '../../../services/workshops';
+import { ListHeaderStyles, ListItemStyles, Utils } from '../../../styles/app';
 
 // Pull out item which is passed to the item renderer, but call the variable workshop
-const renderWorkshopItem = ( { item : workshop } ) => {
+const WorkshopListItem = ( { item : workshop } ) => {
     return (
-        <View style={[ styles.workshopsListItem ]}>
-            <Text style={[ styles.workshopName ]}>
-                {workshop.name}
+        <TouchableHighlight
+            underlayColor="#4488ff"
+            activeOpacity={0.8}
+            onPress={() => {}}
+        >
+            <Text style={ListItemStyles.container}>
+                <Image
+                    source={{ uri: workshop.imageUrl }}
+                    style={ListItemStyles.image}
+                />
+                <Text style={ListItemStyles.text}>
+                    <Text style={ListItemStyles.mainTitle}>
+                        {workshop.name}
+                    </Text>
+                    <Text style={ListItemStyles.subTitle}>
+                        {workshop.location.city},
+                        {workshop.location.state}
+                    </Text>
+                </Text>
             </Text>
-        </View>
+        </TouchableHighlight>
     );
 };
 
@@ -62,7 +79,7 @@ const WorkshopsList = ( { route, navigation } ) => {
                 loading === false && !error && (
                     <FlatList
                         data={workshops}
-                        renderItem={renderWorkshopItem}
+                        renderItem={WorkshopListItem}
                         keyExtractor={workshop => workshop.id}
                     />
                 )
