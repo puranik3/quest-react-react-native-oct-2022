@@ -16,7 +16,7 @@ const WorkshopListItem = ( { item : workshop } ) => {
                     source={{ uri: workshop.imageUrl }}
                     style={ListItemStyles.image}
                 />
-                <Text style={ListItemStyles.text}>
+                <View style={ListItemStyles.text}>
                     <Text style={ListItemStyles.mainTitle}>
                         {workshop.name}
                     </Text>
@@ -24,7 +24,7 @@ const WorkshopListItem = ( { item : workshop } ) => {
                         {workshop.location.city},
                         {workshop.location.state}
                     </Text>
-                </Text>
+                </View>
             </Text>
         </TouchableHighlight>
     );
@@ -77,11 +77,13 @@ const WorkshopsList = ( { route, navigation } ) => {
             }
             {
                 loading === false && !error && (
-                    <FlatList
-                        data={workshops}
-                        renderItem={WorkshopListItem}
-                        keyExtractor={workshop => workshop.id}
-                    />
+                    <View style={Utils.fullHeight}>
+                        <FlatList
+                            data={workshops}
+                            renderItem={WorkshopListItem}
+                            keyExtractor={workshop => workshop.id}
+                        />
+                    </View>
                 )
             }
         </View>

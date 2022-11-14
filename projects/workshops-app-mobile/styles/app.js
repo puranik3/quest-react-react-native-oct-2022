@@ -38,7 +38,7 @@ const ListItemStyles = StyleSheet.create({
         width: 50,
         height: 50,
         resizeMode: 'contain',
-        marginRight: 20
+        paddingRight: 20
     },
     text: {
         flex: 1,
