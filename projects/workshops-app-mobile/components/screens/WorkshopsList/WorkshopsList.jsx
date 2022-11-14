@@ -4,12 +4,14 @@ import { getWorkshops } from '../../../services/workshops';
 import { ListHeaderStyles, ListItemStyles, Utils } from '../../../styles/app';
 
 // Pull out item which is passed to the item renderer, but call the variable workshop
-const WorkshopListItem = ( { item : workshop } ) => {
+const WorkshopListItem = ( { item : workshop, navigate } ) => {
     return (
         <TouchableHighlight
             underlayColor="#4488ff"
             activeOpacity={0.8}
-            onPress={() => {}}
+            onPress={() => {
+                navigate( workshop );
+            }}
         >
             <Text style={ListItemStyles.container}>
                 <Image
@@ -35,6 +37,13 @@ const WorkshopsList = ( { route, navigation } ) => {
     const [ loading, setLoading ] = useState( true );
     const [ workshops, setWorkshops ] = useState( [] );
     const [ error, setError ] = useState( null );
+
+    const navigateToDetailsScreen = ( workshop ) => {
+        navigation.navigate( 'workshop-details', {
+            id: workshop.id,
+            workshopName: workshop.name
+        });
+    }
 
     useEffect(
         () => {
@@ -80,7 +89,9 @@ const WorkshopsList = ( { route, navigation } ) => {
                     <View style={Utils.fullHeight}>
                         <FlatList
                             data={workshops}
-                            renderItem={WorkshopListItem}
+                            renderItem={
+                                props => <WorkshopListItem {...props} navigate={navigateToDetailsScreen} />
+                            }
                             keyExtractor={workshop => workshop.id}
                         />
                     </View>
