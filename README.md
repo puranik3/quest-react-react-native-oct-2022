@@ -3,6 +3,7 @@
 
 ## Doownloads and Issues
 - [Install nvm](https://www.freecodecamp.org/news/nvm-for-windows-how-to-download-and-install-node-version-manager-in-windows-10/)
+- [Proton Native](https://proton-native.js.org/#/quickstart)
 - When working with Expo, you do not gte access to ```ios``` and ```1android``` folders. You need to eject using react-native CLI to get these. Alternatively, run this to get the folders
 ```
 expo run:ios
