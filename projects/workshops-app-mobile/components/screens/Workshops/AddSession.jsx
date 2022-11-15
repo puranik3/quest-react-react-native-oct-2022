@@ -94,10 +94,11 @@ const AddSession = ( { navigation } ) => {
                 label="Abstract"
                 value={abstract}
                 onChangeText={setAbstract}
-                style={styles.input}
+                style={[styles.input, styles.multiline]}
+                multiline={true}
             />
             <Button mode="contained" onPress={addSession}>
-                Press me
+                Add session
             </Button>
         </View>
     );
@@ -109,6 +110,9 @@ const styles = StyleSheet.create({
     },
     input: {
         marginVertical: 10
+    },
+    multiline: {
+        height: 120
     }
 });
  
