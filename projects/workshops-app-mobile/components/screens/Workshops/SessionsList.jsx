@@ -35,8 +35,9 @@ const SessionsListItem = ( { item : session } ) => {
 };
 
 
-const SessionsList = () => {
+const SessionsList = ( { route } ) => {
     const { workshopName, id } = useWorkshop();
+    const { refresh } = route.params;
 
     const [ loading, setLoading ] = useState( true );
     const [ sessions, setSessions ] = useState( [] );
@@ -57,7 +58,7 @@ const SessionsList = () => {
 
             helper();
         },
-        []
+        [ refresh ]
     );
 
     return (
