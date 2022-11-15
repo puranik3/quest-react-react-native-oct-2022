@@ -5,6 +5,21 @@ const getSessionsForWorkshop = async ( id ) => {
 
     return response.data;
 };
+
+const addSession = async ( session ) => {
+    const response = await axios.post(
+        `https://workshops-server.herokuapp.com/sessions`,
+        session,
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    return response.data;
+}
+
 export {
-    getSessionsForWorkshop
+    getSessionsForWorkshop,
+    addSession
 };
