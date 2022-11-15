@@ -62,7 +62,7 @@ const SessionsList = () => {
 
     return (
         <View style={[ styles.container ]}>
-            <Text style={[ styles.heading ]}>List of workshops</Text>
+            <Text style={[ styles.heading ]}>List of sessions</Text>
             {
                 loading === true && (
                     <View style={[ styles.aiWrapper ]}>
