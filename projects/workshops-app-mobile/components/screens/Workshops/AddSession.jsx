@@ -8,7 +8,7 @@ import { addSession as addSessionSvc } from '../../../services/sessions';
 
 // Reference: How to use react-hook-form for validations
 // https://snack.expo.dev/@bluebill1049/react-hook-form-v7---controller
-const AddSession = ( { navigation, route } ) => {
+const AddSession = ( { navigation } ) => {
     const { workshopName, id } = useWorkshop();
 
     const [ sequenceId, setSequenceId ] = useState( '' );
