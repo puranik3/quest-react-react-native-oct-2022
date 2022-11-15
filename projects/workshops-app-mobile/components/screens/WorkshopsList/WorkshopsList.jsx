@@ -18,7 +18,7 @@ const WorkshopListItem = ( { item : workshop, navigate } ) => {
                     source={{ uri: workshop.imageUrl }}
                     style={ListItemStyles.image}
                 />
-                <View style={ListItemStyles.text}>
+                <View style={[ListItemStyles.text, styles.itemDetails]}>
                     <Text style={ListItemStyles.mainTitle}>
                         {workshop.name}
                     </Text>
@@ -136,6 +136,9 @@ const styles = StyleSheet.create({
     },
     workshopName: {
         fontSize: 16
+    },
+    itemDetails: {
+        paddingLeft: 20
     }
 });
 

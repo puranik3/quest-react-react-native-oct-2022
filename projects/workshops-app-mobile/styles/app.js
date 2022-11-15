@@ -27,10 +27,11 @@ const ListHeaderStyles = StyleSheet.create({
 const ListItemStyles = StyleSheet.create({
     container: {
         flex: 1,
-        height: 72,
-        padding: 10,
+        height: 80,
+        padding: 20,
+        marginVertical: 4,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         justifyContent: 'space-between'
     },
     image: {
@@ -38,12 +39,11 @@ const ListItemStyles = StyleSheet.create({
         width: 50,
         height: 50,
         resizeMode: 'contain',
-        paddingRight: 20
     },
     text: {
         flex: 1,
         flexDirection: 'column',
-        fontSize: 16
+        fontSize: 20
     },
     mainTitle: {
         fontSize: 16,

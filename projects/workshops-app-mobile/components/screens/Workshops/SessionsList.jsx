@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { View, Text,  FlatList, ActivityIndicator, TouchableHighlight, StyleSheet } from 'react-native';
+import { List } from 'react-native-paper';
 import { useWorkshop } from '../../../contexts/WorkshopContext';
 import { ListHeaderStyles, ListItemStyles, Utils } from '../../../styles/app';
 import { getSessionsForWorkshop } from '../../../services/sessions';
@@ -16,28 +17,34 @@ const getLevelBadge = level => {
 
 const SessionsListItem = ( { item : session } ) => {
     return (
-        <View>
-            <Text style={ListItemStyles.container}>
-                <View style={ListItemStyles.text}>
-                    <Text style={ListItemStyles.mainTitle}>
-                        {session.name}
-                    </Text>
-                    <Text style={{ ...ListItemStyles.subTitle, flexDirection: 'column' }}>
-                        <Text style={styles[getLevelBadge( session.level )]}>{session.level}</Text>
-                        <Text style={styles.votes}>
-                            Votes = {session.upvoteCount}
+        <List.Accordion title={session.name} id={session.id}>
+            <List.Item
+                title={session.abstract}
+                description={session.level + ' | Votes = ' + session.upvoteCount}
+            />
+            {/* <List.Item>
+                <Text style={ListItemStyles.container}>
+                    <View style={ListItemStyles.text}>
+                        <Text style={ListItemStyles.mainTitle}>
+                            {session.name}
                         </Text>
-                    </Text>
-                </View>
-            </Text>
-        </View>
+                        <Text style={{ ...ListItemStyles.subTitle, flexDirection: 'column' }}>
+                            <Text style={styles[getLevelBadge( session.level )]}>{session.level}</Text>
+                            <Text style={styles.votes}>
+                                Votes = {session.upvoteCount}
+                            </Text>
+                        </Text>
+                    </View>
+                </Text>
+            </List.Item> */}
+        </List.Accordion>
     );
 };
 
 
 const SessionsList = ( { route } ) => {
     const { workshopName, id } = useWorkshop();
-    const { refresh } = route.params;
+    const { refresh } = route.params || {};
 
     const [ loading, setLoading ] = useState( true );
     const [ sessions, setSessions ] = useState( [] );
@@ -85,11 +92,15 @@ const SessionsList = ( { route } ) => {
             {
                 loading === false && !error && (
                     <View style={Utils.fullHeight}>
-                        <FlatList
-                            data={sessions}
-                            renderItem={SessionsListItem}
-                            keyExtractor={session => session.id}
-                        />
+                        <List.AccordionGroup>
+                            {
+                                sessions.map(
+                                    session => (
+                                        <SessionsListItem key={session.id} item={session} />
+                                    )
+                                )
+                            }
+                        </List.AccordionGroup>
                     </View>
                 )
             }
