@@ -4,6 +4,10 @@ import { StyleSheet, View, Text } from 'react-native';
 // no need to specify the .platform extension - it is picked up based on the underlying platform
 import AsyncStorageDemo from './components/19-AsyncStorage';
 
+import { AppRegistry } from 'react-native';
+
+AppRegistry.registerHeadlessTask('HeadlessTask', () => require('./services/headless') );
+
 export default function App() {
   return (
     <View style={styles.container}>

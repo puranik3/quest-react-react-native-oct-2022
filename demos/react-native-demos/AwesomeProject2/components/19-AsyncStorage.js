@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const AsyncStorageDemo = () => {
     const [ email, setEmail ] = useState( '' );
     const [ password, setPassword ] = useState( '' );
+    const [ count, setCount ] = useState( 0 );
 
     // read the email which is stored in AsyncStorage as soon as the component renders for the first time
     useEffect(
@@ -52,6 +53,11 @@ const AsyncStorageDemo = () => {
                 />
                 <Text>{password}</Text>
                 <Button title="Login" onPress={login} />
+                <Text>Count = {count}</Text>
+                <Button title="Get latest count" onPress={async () => {
+                    const count = await AsyncStorage.getItem( 'count' );
+                    setCount( count );
+                }} />
             </View>
         </SafeAreaView>
     );

@@ -12,10 +12,14 @@ npm start
 ```
 npm run dev
 ```
-- When working with Expo, you do not gte access to ```ios``` and ```1android``` folders. You need to eject using react-native CLI to get these. Alternatively, run this to get the folders
+- When working with Expo, you do not gte access to ```ios``` and ```android``` folders. You need to eject using react-native CLI to get these. Alternatively, run this to get the folders
 ```
 expo run:ios
 ````
+- To run on a chosen iOS simulator for React Native CLI projects. From the project React Native folder run
+```
+npx react-native run-ios --simulator="iPhone 14 Pro Max"
+```
 
 ## References
 - [Server](https://workshops-server.herokuapp.com/)
