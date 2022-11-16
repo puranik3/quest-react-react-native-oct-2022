@@ -12,6 +12,7 @@ const Calculator = () => {
         setNumber1( 0 );
         setNumber2( 0 );
         setOperator( '' );
+        setStep( 1 );
     };
 
     /**
@@ -27,33 +28,32 @@ const Calculator = () => {
         }
 
         if( step === 3 ) {
-            setNumber2( number );
-            setResult( `${number1} ${operator} ${number2}` );
+            setNumber2( number ); // state setters are asynchronous (so number2 gets updated after a . while)
+            setResult( `${number1} ${operator} ${number}` );
         }
     };
     
     const operatorClick = ( operator ) => {
-        setOperator( operator );
-        setResult( `${number1} ${operator}` );
-        setStep( 3 );
+        if( step === 2 ) {
+            setOperator( operator );
+            setResult( `${number1} ${operator}` );
+            setStep( 3 );
+        }
     };
     
     const evaluateClick = () => {
-        const number1Int = parseInt( number1 );
-        const number2Int = parseInt( number2 );
-
         switch( operator ) {
             case '+':
-                setResult( number1Int + number2Int );
+                setResult( number1 + number2 );
                 break;
             case '-':
-                setResult( number1Int - number2Int );
+                setResult( number1 - number2 );
                 break;
             case 'x':
-                setResult( number1Int * number2Int );
+                setResult( number1 * number2 );
                 break;
-            case '+':
-                setResult( number1Int + number2Int );
+            case '/':
+                setResult( number1 / number2 );
                 break;
         }
 
@@ -62,7 +62,7 @@ const Calculator = () => {
     
     const cancelClick = () => {
         setResult( '' );
-        reset();
+        setStep( 1 );
     };
 
     return (
